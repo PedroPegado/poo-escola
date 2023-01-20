@@ -52,10 +52,10 @@ alguma dica que vale a pena
 ## Autores
 
 ### Alunos
-* João Pedro Augusto da Silva  
-    * [@PedroPegado](https://github.com/PedroPegado)
-* Pedro Henrique Pegado de Sá
+* João Pedro Augusto da Silva
     * [@PedroAug92](https://github.com/PedroAug92)
+* Pedro Henrique Pegado de Sá
+    * [@PedroPegado](https://github.com/PedroPegado)
 
 ### Professor
 * Gilbran Andrade
