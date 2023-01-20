@@ -53,9 +53,9 @@ alguma dica que vale a pena
 
 ### Alunos
 * João Pedro Augusto da Silva  
-    * [@](https://github.com/USUARIO)
+    * [@](https://github.com/PedroPegado)
 * Pedro Henrique Pegado de Sá
-    * [@](https://github.com/USUARIO)
+    * [@](https://github.com/PedroAug92)
 
 ### Professor
 * Gilbran Andrade
