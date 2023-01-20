@@ -12,10 +12,10 @@ class Disciplina:
                 
     
     def emitirRelatorio(self):
-        print(f"Nome da disciplina:", self.nome)
-        print(f"Carga Horária da disciplina:", self.cargaHoraria)
-        print(f"Código da disciplina:", self.codigoDisciplina)
+        print("Nome da disciplina:", self.nome)
+        print("Carga Horária da disciplina:", self.cargaHoraria)
+        print("Código da disciplina:", self.codigoDisciplina)
         if (self.professor == ""):
-            print(f"Professor: Indeterminado")
+            print("Professor: Indeterminado")
         else:
-            print(f"Professor:", self.professor)
+            print("Professor:", self.professor)
