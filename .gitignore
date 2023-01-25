@@ -1,3 +1,4 @@
 .DS_store
-*.pyc
-*.txt
+.pyc
+.txt
+codigo/__pycache__/
