@@ -1,0 +1,3 @@
+#001:Matematica:60:
+#002:Portugues:70:
+#003:PEOO:120:
