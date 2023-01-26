@@ -70,8 +70,18 @@ while True:
 
 """
 TO-DOs
+-o- Funções para o menu de disciplina, aluno e professor.
+-o- Planejar diagrama de classes da interface gráfica (Kivy e KivyMD).
+-o- Atualizar o README.md com instruções para utilizar a interface gráfica (Kivy e KivyMD).
 -o- ...
 -o- ...
 -o- ...
--o- ...
+
+ORGANIZAÇÃO DOS ARQUIVOS
+---Alunos---
+matricula:nome:codigoDisciplina, notas:\n
+---Professores---
+matricula:nome:codigoDisciplinas:\n
+---Disciplinas---
+codigoDisciplina:nome:cargaHoraria:\n
 """
