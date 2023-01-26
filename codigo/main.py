@@ -15,58 +15,63 @@ def checaExiste(nomeArquivo):
     
 
 for nome in ['alunos.txt', 'professores.txt', 'disciplinas.txt']:
-    bancoDados = checaExiste(nome)
+    dados_disciplina = checaExiste(nome)
 
-dic = {}
+disciplinas_dic = {}
 
 try:
-    for linha in bancoDados:
+    for linha in dados_disciplina:
         dados = linha.split(':')
-        codDisciplina = dados[0]
-        dic[codDisciplina] = dados[1:3]
+        codigo_disciplina = dados[0]
+        disciplinas_dic[codigo_disciplina] = dados[1:3]
 except TypeError as error:
     pass
 
 while True:
-    print('''DIGITE A OPÇÃO DESEJADA:
+    print('''\nDIGITE A OPÇÃO DESEJADA:
     1 - CRIAR DISCIPLINA
     2 - EMITIR RELATÓRIO DE DISCIPLINA
     3 - ENCERRAR O PROGRAMA''')
 
     try:
-        acao = int(input('> '))
+        acao_usuario = int(input('> '))
     except:
         print("Ação inválida.")
     else:
-        if (acao == 1):
+        if (acao_usuario == 1):
             print("Carga horaria:")
-            ch = int(input("> "))
+            carga_horaria = int(input("> "))
             print("Nome da disciplina:")
-            nome = input("> ")
+            nome_disciplina = input("> ")
             print("Código da disciplina:")
-            codDisci = input("> #")
-            Disciplina(ch, nome, codDisci)
-            linha = f"#{codDisci}:{nome}:{ch}:\n"
+            codigo_disciplina = input("> #")
+
+            disciplina = Disciplina(codigo_disciplina, nome_disciplina, carga_horaria)
+
+            linha = f"#{codigo_disciplina}:{nome_disciplina}:{carga_horaria}:\n"
 
             with open("disciplinas.txt", 'a') as arquivo:
                 arquivo.write(linha)
-        elif (acao == 2):
+        elif (acao_usuario == 2):
             print("Digite o código da disciplina:")
-            opc2 = input('#')
-            materia = dic.get(f'#{opc2}')
-            if materia == None:
+            codigo_disciplina = input('#')
+            materia = disciplinas_dic.get(f'#{codigo_disciplina}')
+            if (materia == None):
                 print('Matéria inexistente')
                 continue
             else:
-                disciplina = Disciplina(materia[1], materia[0], opc2)
+                nome_disciplina = materia[0]
+                carga_horaria = materia[1]
+                disciplina = Disciplina(codigo_disciplina, nome_disciplina, carga_horaria)
                 disciplina.emitirRelatorio()
-        elif (acao == 3):
+        elif (acao_usuario == 3):
             print("Até breve...")
             break
 
 """
-Cadastrar disciplina vai fazer com que o usuario informe um codigo, um nome e a carga horaria da disciplina. Depois disso um objeto vai ser instanciado com os dados informados.
-Caso um codigo de disciplina ja existir, avisar o user.
-
-Emitir o relatorio de uma disciplina vai pegar os dados da disciplina no dicionario usando o codigo da disciplina informado pelo user.
+TO-DOs
+-o- ...
+-o- ...
+-o- ...
+-o- ...
 """
