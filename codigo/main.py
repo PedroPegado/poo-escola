@@ -17,14 +17,14 @@ def checaExiste(nomeArquivo):
 for nome in ['alunos.txt', 'professores.txt', 'disciplinas.txt']:
     bancoDados = checaExiste(nome)
 
-dicio = {}
+dic = {}
 
 try:
     for linha in bancoDados:
         dados = linha.split(':')
         codDisciplina = dados[0]
-        nomeDisciplina = dados[1]
-        dicio[codDisciplina] = nomeDisciplina
+        dic[codDisciplina] = dados[1:3]
+        print(dic[codDisciplina][0])
 except TypeError as error:
     pass
 
@@ -54,8 +54,10 @@ while True:
         elif (acao == 2):
             print("Digite o código da disciplina:")
             opc2 = input('#')
-            disciplina = Disciplina(chDic, nomeDic, codDic)
-            Disciplina.emitirRelatorio()
+            for Key in dic:
+                if Key == f'#{opc2}':
+                    disciplina = Disciplina(dic[Key][1], dic[Key][0], opc2)
+            disciplina.emitirRelatorio()
         elif (acao == 3):
             print("Até breve...")
             break
