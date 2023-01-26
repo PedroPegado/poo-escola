@@ -24,7 +24,6 @@ try:
         dados = linha.split(':')
         codDisciplina = dados[0]
         dic[codDisciplina] = dados[1:3]
-        print(dic[codDisciplina][0])
 except TypeError as error:
     pass
 
@@ -54,10 +53,13 @@ while True:
         elif (acao == 2):
             print("Digite o código da disciplina:")
             opc2 = input('#')
-            for Key in dic:
-                if Key == f'#{opc2}':
-                    disciplina = Disciplina(dic[Key][1], dic[Key][0], opc2)
-            disciplina.emitirRelatorio()
+            materia = dic.get(f'#{opc2}')
+            if materia == None:
+                print('Matéria inexistente')
+                continue
+            else:
+                disciplina = Disciplina(materia[1], materia[0], opc2)
+                disciplina.emitirRelatorio()
         elif (acao == 3):
             print("Até breve...")
             break
