@@ -34,13 +34,14 @@ def estrutura_disciplina(dicionario):
 
             with open("disciplinas.txt", 'a') as arquivo:
                 arquivo.write(linha)
+
+            dicionario[f"#{codigo_disciplina}"] = [nome_disciplina, carga_horaria]
+            return dicionario
         else:
-            print('=' * 20)
-            print('Código já cadastrado')
-            print('=' * 20)
-    elif (acao_usuario == 2):
+            print('====================\nCódigo já cadastrado\n====================')
+    elif (acao_dois == 2):
         print("Digite o código da disciplina:")
-        codigo_disciplina = input('#')
+        codigo_disciplina = input('> #')
         materia = dicionario.get(f'#{codigo_disciplina}')
         if (materia == None):
             print('Disciplina inexistente')
@@ -81,11 +82,15 @@ while True:
             if (retorno == None):
                 pass
             else:
-                continue
+                disciplinas_dic = retorno
+
         elif acao_usuario == 2:
             pass
         elif acao_usuario == 3:
             pass
+        elif acao_usuario == 0:
+            print("Até breve...")
+            break
 
 """
 TO-DOs
