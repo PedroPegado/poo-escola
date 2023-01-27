@@ -13,8 +13,13 @@ def checa_existe(nomeArquivo):
         with open(nomeArquivo, 'w') as arquivo:
             pass
 
-def estrutura_disciplina(dicionario, acao_usuario):
-    if (acao_usuario == 1):
+def estrutura_disciplina(dicionario):
+    print('''\nDIGITE A OPÇÃO DESEJADA:
+    1 - CRIAR DISCIPLINA
+    2 - EMITIR RELATÓRIO''')
+    acao_dois = int(input("> "))
+
+    if (acao_dois == 1):
         print("Código da disciplina:")
         codigo_disciplina = input("> #")
 
@@ -39,15 +44,11 @@ def estrutura_disciplina(dicionario, acao_usuario):
         materia = dicionario.get(f'#{codigo_disciplina}')
         if (materia == None):
             print('Disciplina inexistente')
-            return 'volta'
         else:
             nome_disciplina = materia[0]
             carga_horaria = materia[1]
             disciplina = Disciplina(codigo_disciplina, nome_disciplina, carga_horaria)
             disciplina.emitirRelatorio()
-    elif (acao_usuario == 3):
-        print("Até breve...")
-        return 'sair'
 
 
 for nome in ['alunos.txt', 'professores.txt', 'disciplinas.txt']:
@@ -76,9 +77,9 @@ while True:
         print("Ação inválida.")
     else:
         if acao_usuario == 1:
-            retorno = estrutura_disciplina(disciplinas_dic, acao_usuario)
-            if retorno == 'sair':
-                break
+            retorno = estrutura_disciplina(disciplinas_dic)
+            if (retorno == None):
+                pass
             else:
                 continue
         elif acao_usuario == 2:
@@ -95,11 +96,17 @@ TO-DOs
 -o- ...
 -o- ...
 
-ORGANIZAÇÃO DOS ARQUIVOS
+FORMATAÇÃO DOS ARQUIVOS
 ---Alunos---
 matricula:nome:codigoDisciplina, notas:\n
 ---Professores---
 matricula:nome:codigoDisciplinas:\n
 ---Disciplinas---
 codigoDisciplina:nome:cargaHoraria:\n
+
+FORMATAÇÃO DOS DICIONÁRIOs
+---Alunos---
+---Professores---
+---Disciplinas---
+{'#001': ['PEOO', 120]}
 """
