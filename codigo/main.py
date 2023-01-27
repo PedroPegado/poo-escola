@@ -15,24 +15,24 @@ def checa_existe(nomeArquivo):
 
 def estrutura_disciplina(dicionario, acao_usuario):
     if (acao_usuario == 1):
-        print("Carga horaria:")
-        carga_horaria = int(input("> "))
-        print("Nome da disciplina:")
-        nome_disciplina = input("> ")
         print("Código da disciplina:")
         codigo_disciplina = input("> #")
-        if dicionario.get(f'#{codigo_disciplina}') == None:
-            disciplina = Disciplina(codigo_disciplina, nome_disciplina, carga_horaria)
 
+        if dicionario.get(f'#{codigo_disciplina}') == None:
+            print("Carga horaria:")
+            carga_horaria = int(input("> "))
+            print("Nome da disciplina:")
+            nome_disciplina = input("> ")
+
+            disciplina = Disciplina(codigo_disciplina, nome_disciplina, carga_horaria)
             linha = f"#{codigo_disciplina}:{nome_disciplina}:{carga_horaria}:\n"
+
+            with open("disciplinas.txt", 'a') as arquivo:
+                arquivo.write(linha)
         else:
             print('=' * 20)
             print('Código já cadastrado')
             print('=' * 20)
-            return 'volta'
-
-        with open("disciplinas.txt", 'a') as arquivo:
-            arquivo.write(linha)
     elif (acao_usuario == 2):
         print("Digite o código da disciplina:")
         codigo_disciplina = input('#')
@@ -67,7 +67,8 @@ while True:
     print('''\nDIGITE A OPÇÃO DESEJADA:
     1 - DISCIPLINA
     2 - PROFESSOR
-    3 - ALUNO''')
+    3 - ALUNO
+    0 - SAIR''')
 
     try:
         acao_usuario = int(input('> '))
@@ -78,7 +79,7 @@ while True:
             retorno = estrutura_disciplina(disciplinas_dic, acao_usuario)
             if retorno == 'sair':
                 break
-            elif retorno == 'volta':
+            else:
                 continue
         elif acao_usuario == 2:
             pass
