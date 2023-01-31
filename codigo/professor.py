@@ -19,9 +19,5 @@ class Professor(Pessoa):
             for linha in linhasDisc:
                 disciplina = linha.split(':')
 
-    def cadastrarProfessor(self, nome, codigosDisciplinas):
-        pass
-
-
 
         

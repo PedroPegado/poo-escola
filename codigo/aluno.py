@@ -6,9 +6,6 @@ class Aluno(Pessoa):
         super().__init__(matricula)
         self.notas = []
 
-    def cadastrarAluno(self, nome, codigosDisciplinas):
-        pass
-
     def emitirBoletim(self):
         pass
 
