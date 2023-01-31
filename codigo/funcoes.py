@@ -1,3 +1,9 @@
+from aluno import Aluno
+from disciplina import Disciplina
+from pessoa import Pessoa
+from professor import Professor
+
+
 def checa_existe(nomeArquivo):
     try:
         with open(nomeArquivo, 'r') as arquivo:
@@ -31,9 +37,11 @@ def estrutura_disciplina(dicionario):
                 arquivo.write(linha)
 
             dicionario[f"#{codigo_disciplina}"] = [nome_disciplina, carga_horaria]
+
+            print('\n====================\nDisciplina cadastrada\n====================')
             return dicionario
         else:
-            print('====================\nCódigo já cadastrado\n====================')
+            print('\n====================\nCódigo já cadastrado\n====================')
     elif (acao_dois == 2):
         print("Digite o código da disciplina:")
         codigo_disciplina = input('> #')

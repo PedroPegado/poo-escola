@@ -7,6 +7,8 @@ for nome in ['alunos.txt', 'professores.txt', 'disciplinas.txt']:
     dados_disciplina = checa_existe(nome)
 
 disciplinas_dic = {}
+professores_dic = {}
+alunos_dic = {}
 
 try:
     for linha in dados_disciplina:
@@ -36,9 +38,11 @@ while True:
                 disciplinas_dic = retorno
 
         elif acao_usuario == 2:
-            pass
+            retorno = estrutura_professor(professores_dic)
+
         elif acao_usuario == 3:
-            pass
+            retorno = estrutura_aluno(alunos_dic)
+            
         elif acao_usuario == 0:
             print("Até breve...")
             break
