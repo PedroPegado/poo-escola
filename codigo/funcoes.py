@@ -67,3 +67,21 @@ def estrutura_professor(dicionario):
 
         if dicionario.get(f'{matricula_professor}') == None:
             print('Nome do professor: ')
+            
+def estrutura_aluno(dicionario):
+    print('''\nDIGITE A OPÇÃO DESEJADA:
+    1 - CADASTRAR ALUNO
+    2 - EMITIR RELATÓRIO
+    3 - ALTERAR NOTAS
+    4 - ALTERAR DISCIPLINAS''')
+    acao_user = int(input("> "))
+
+    if (acao_user == 1):
+        print("Matricula do aluno:")
+        matricula_aluno = input("> ")
+        if (dicionario.get(matricula_aluno) == None):
+            print("Nome do aluno:")
+            nome_aluno = input("> ")
+            print("Gostaria de cadastrar as disciplinas deste aluno agora?")
+            acao_user = input("(1)Sim (0)Não\n> ")
+
