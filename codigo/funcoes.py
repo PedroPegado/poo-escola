@@ -16,7 +16,7 @@ def checa_existe(nomeArquivo):
 
 def estrutura_disciplina(dicionario):
     print('''\nDIGITE A OPÇÃO DESEJADA:
-    1 - CRIAR DISCIPLINA
+    1 - CADASTRAR DISCIPLINA
     2 - EMITIR RELATÓRIO''')
     acao_dois = int(input("> "))
 
@@ -53,3 +53,17 @@ def estrutura_disciplina(dicionario):
             carga_horaria = materia[1]
             disciplina = Disciplina(codigo_disciplina, nome_disciplina, carga_horaria)
             disciplina.emitirRelatorio()
+
+def estrutura_professor(dicionario):
+    print('''\nDIGITE A OPÇÃO DESEJADA:
+    1 - CADASTRAR PROFESSOR
+    2 - EMITIR RELATÓRIO
+    3 - ALTERAR DISCIPLINA''')
+    acao_dois = int(input("> "))
+
+    if acao_dois == 1:
+        print('Matricula do professor:')
+        matricula_professor = int(input('> '))
+
+        if dicionario.get(f'{matricula_professor}') == None:
+            print('Nome do professor: ')
