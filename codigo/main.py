@@ -66,8 +66,9 @@ codigoDisciplina:nome:cargaHoraria:\n
 
 FORMATAÇÃO DOS DICIONÁRIOs
 ---Alunos---
+{matricula: ['Nome', ["#001,100,20,40,80"]]}
 ---Professores---
-{'matricula': ['Nome']}
+{matricula: ['Nome']}
 ---Disciplinas---
 {'#001': ['PEOO', 120]}
 """

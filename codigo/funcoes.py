@@ -53,3 +53,21 @@ def estrutura_disciplina(dicionario):
             carga_horaria = materia[1]
             disciplina = Disciplina(codigo_disciplina, nome_disciplina, carga_horaria)
             disciplina.emitirRelatorio()
+
+def estrutura_aluno(dicionario):
+    print('''\nDIGITE A OPÇÃO DESEJADA:
+    1 - CADASTRAR ALUNO
+    2 - EMITIR RELATÓRIO
+    3 - ALTERAR NOTAS
+    4 - ALTERAR DISCIPLINAS''')
+    acao_user = int(input("> "))
+
+    if (acao_user == 1):
+        print("Matricula do aluno:")
+        matricula_aluno = input("> ")
+        if (dicionario.get(matricula_aluno) == None):
+            print("Nome do aluno:")
+            nome_aluno = input("> ")
+            print("Gostaria de cadastrar as disciplinas deste aluno agora?")
+            acao_user = input("(1)Sim (0)Não\n> ")
+
