@@ -1,6 +1,6 @@
 from aluno import Aluno
 from disciplina import Disciplina
-from funcoes import checa_existe, estrutura_disciplina
+from funcoes import checa_existe, estrutura_disciplina, estrutura_professor, estrutura_aluno
 from professor import Professor
 
 for nome in ['alunos.txt', 'professores.txt', 'disciplinas.txt']:
@@ -39,6 +39,10 @@ while True:
 
         elif acao_usuario == 2:
             retorno = estrutura_professor(professores_dic)
+            if retorno == None:
+                pass
+            else:
+                professores_dic = retorno
 
         elif acao_usuario == 3:
             retorno = estrutura_aluno(alunos_dic)
@@ -66,7 +70,7 @@ codigoDisciplina:nome:cargaHoraria:\n
 
 FORMATAÇÃO DOS DICIONÁRIOs
 ---Alunos---
-{matricula: ['Nome', ["#001,100,20,40,80"]]}
+{matricula: ['Nome', ["#001,100,20,40,80", "#002, 0, 50, 60, 100"]]}
 ---Professores---
 {matricula: ['Nome']}
 ---Disciplinas---

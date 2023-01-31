@@ -58,16 +58,47 @@ def estrutura_professor(dicionario):
     print('''\nDIGITE A OPÇÃO DESEJADA:
     1 - CADASTRAR PROFESSOR
     2 - EMITIR RELATÓRIO
-    3 - ALTERAR DISCIPLINA''')
-    acao_dois = int(input("> "))
+    3 - ALTERAR DISCIPLINAS''')
+    acao_prof = int(input("> "))
 
-    if acao_dois == 1:
+    if acao_prof == 1:
         print('Matricula do professor:')
-        matricula_professor = int(input('> '))
+        matricula_professor = input('> ')
 
         if dicionario.get(f'{matricula_professor}') == None:
             print('Nome do professor: ')
-            
+            nome_professor = input('> ')
+            print('Gostaria de cadastrar as disciplinas deste professor agora?')
+            acao_prof = int(input('(1)Sim (0)Não\n> '))
+
+            if acao_prof == 1:
+                disciplinas_prof = []
+                while True:
+                    print('Digite o código da disciplina(0 para finalizar)')
+                    cod = input('> #')
+                    if cod == '0':
+                        break
+                    disciplinas_prof.append(f'#{cod}')
+
+                professor = Professor(matricula_professor)
+                linha = f"{matricula_professor}:{nome_professor}:{disciplinas_prof}:\n"
+      
+                with open('professores.txt', 'a') as arquivo:
+                    arquivo.write(linha)
+                    
+            elif acao_prof == 0:
+                professor = Professor(matricula_professor)
+                linha = f"{matricula_professor}:{nome_professor}:{None}:\n"
+
+                with open('professores.txt', 'a') as arquivo:
+                    arquivo.write(linha)
+
+            dicionario[matricula_professor] = [nome_professor]
+
+            print('\n====================\nProfessore cadastrade\n====================')
+            return dicionario
+        else:
+            print('\n====================\nProfessore já cadastrade\n====================')
 def estrutura_aluno(dicionario):
     print('''\nDIGITE A OPÇÃO DESEJADA:
     1 - CADASTRAR ALUNO
