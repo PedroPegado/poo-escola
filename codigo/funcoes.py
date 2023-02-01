@@ -3,8 +3,7 @@ from disciplina import Disciplina
 from pessoa import Pessoa
 from professor import Professor
 
-
-def checa_existe(nomeArquivo):
+def checa_arquivo_existe(nomeArquivo):
     try:
         with open(nomeArquivo, 'r') as arquivo:
             dados_arquivo = arquivo.readlines()
@@ -54,7 +53,7 @@ def estrutura_disciplina(dicionario):
             disciplina = Disciplina(codigo_disciplina, nome_disciplina, carga_horaria)
             disciplina.emitirRelatorio()
 
-def estrutura_professor(dicionario):
+def estrutura_professor(dicionario_professores, dicionario_disciplinas):
     print('''\nDIGITE A OPÇÃO DESEJADA:
     1 - CADASTRAR PROFESSOR
     2 - EMITIR RELATÓRIO
@@ -65,26 +64,30 @@ def estrutura_professor(dicionario):
         print('Matricula do professor:')
         matricula_professor = input('> ')
 
-        if dicionario.get(f'{matricula_professor}') == None:
+        if dicionario_professores.get(f'{matricula_professor}') == None:
             print('Nome do professor: ')
             nome_professor = input('> ')
             print('Gostaria de cadastrar as disciplinas deste professor agora?')
             acao_user = int(input('(1)Sim (0)Não\n> '))
-            disciplinas_prof = ""
+            disciplinas_professor = ""
 
             if acao_user == 1:
                 while True:
                     print('Digite o código da disciplina(0 para finalizar)')
                     codigo_disciplina = input('> #')
-                    if codigo_disciplina == '0':
-                        disciplinas_prof = disciplinas_prof[0:len(disciplinas_prof) - 1]
-                        break
+                    if (dicionario_disciplinas.get(f"#{codigo_disciplina}") == None and codigo_disciplina != "0"):
+                        print("Essa disciplina não existe.")
+                        continue
                     else:
-                        disciplinas_prof += f'#{codigo_disciplina},'
+                        if codigo_disciplina == '0':
+                            disciplinas_professor = disciplinas_professor[0:len(disciplinas_professor) - 1]
+                            break
+                        else:
+                            disciplinas_professor += f'#{codigo_disciplina},'
 
                 professor = Professor(matricula_professor)
-                professor.codigosDisciplinas = disciplinas_prof.split(",")
-                linha = f"{matricula_professor}:{nome_professor}:{disciplinas_prof}:\n"
+                professor.codigosDisciplinas = disciplinas_professor.split(",")
+                linha = f"{matricula_professor}:{nome_professor}:{disciplinas_professor}:\n"
       
                 with open('professores.txt', 'a') as arquivo:
                     arquivo.write(linha)
@@ -96,12 +99,25 @@ def estrutura_professor(dicionario):
                 with open('professores.txt', 'a') as arquivo:
                     arquivo.write(linha)
 
-            dicionario[matricula_professor] = [nome_professor,disciplinas_prof]
+            dicionario_professores[matricula_professor] = [nome_professor,disciplinas_professor]
 
             print('\n====================\nProfessore cadastrade\n====================')
-            return dicionario
+            return dicionario_professores
         else:
             print('\n====================\nProfessore já cadastrade\n====================')
+    elif (acao_user == 2):
+        print("Digite a matrícula do professor:")
+        matricula_professor = int(input())
+        dados_prof = dicionario_professores.get(f"{matricula_professor}")
+        if (dados_prof == None):
+            print("Professor inexistente.")
+        else:
+            professor = Professor(matricula_professor)
+            professor.codigosDisciplinas = dados_prof[1].split(",")
+            professor.emitirRelatorio()
+
+
+
 def estrutura_aluno(dicionario):
     print('''\nDIGITE A OPÇÃO DESEJADA:
     1 - CADASTRAR ALUNO
