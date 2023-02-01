@@ -7,9 +7,8 @@ from professor import Professor
 def checa_existe(nomeArquivo):
     try:
         with open(nomeArquivo, 'r') as arquivo:
-            if (nomeArquivo == "disciplinas.txt"):
-                dadosDisciplinas = arquivo.readlines()
-                return dadosDisciplinas
+            dados_arquivo = arquivo.readlines()
+            return dados_arquivo
     except: 
         with open(nomeArquivo, 'w') as arquivo:
             pass
@@ -46,6 +45,7 @@ def estrutura_disciplina(dicionario):
         print("Digite o código da disciplina:")
         codigo_disciplina = input('> #')
         materia = dicionario.get(f'#{codigo_disciplina}')
+
         if (materia == None):
             print('Disciplina inexistente')
         else:
@@ -59,9 +59,9 @@ def estrutura_professor(dicionario):
     1 - CADASTRAR PROFESSOR
     2 - EMITIR RELATÓRIO
     3 - ALTERAR DISCIPLINAS''')
-    acao_prof = int(input("> "))
+    acao_user = int(input("> "))
 
-    if acao_prof == 1:
+    if acao_user == 1:
         print('Matricula do professor:')
         matricula_professor = input('> ')
 
@@ -69,31 +69,34 @@ def estrutura_professor(dicionario):
             print('Nome do professor: ')
             nome_professor = input('> ')
             print('Gostaria de cadastrar as disciplinas deste professor agora?')
-            acao_prof = int(input('(1)Sim (0)Não\n> '))
+            acao_user = int(input('(1)Sim (0)Não\n> '))
+            disciplinas_prof = ""
 
-            if acao_prof == 1:
-                disciplinas_prof = []
+            if acao_user == 1:
                 while True:
                     print('Digite o código da disciplina(0 para finalizar)')
-                    cod = input('> #')
-                    if cod == '0':
+                    codigo_disciplina = input('> #')
+                    if codigo_disciplina == '0':
+                        disciplinas_prof = disciplinas_prof[0:len(disciplinas_prof) - 1]
                         break
-                    disciplinas_prof.append(f'#{cod}')
+                    else:
+                        disciplinas_prof += f'#{codigo_disciplina},'
 
                 professor = Professor(matricula_professor)
+                professor.codigosDisciplinas = disciplinas_prof.split(",")
                 linha = f"{matricula_professor}:{nome_professor}:{disciplinas_prof}:\n"
       
                 with open('professores.txt', 'a') as arquivo:
                     arquivo.write(linha)
                     
-            elif acao_prof == 0:
+            elif acao_user == 0:
                 professor = Professor(matricula_professor)
                 linha = f"{matricula_professor}:{nome_professor}:{None}:\n"
 
                 with open('professores.txt', 'a') as arquivo:
                     arquivo.write(linha)
 
-            dicionario[matricula_professor] = [nome_professor]
+            dicionario[matricula_professor] = [nome_professor,disciplinas_prof]
 
             print('\n====================\nProfessore cadastrade\n====================')
             return dicionario

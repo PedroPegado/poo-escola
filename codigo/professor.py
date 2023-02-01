@@ -6,18 +6,14 @@ class Professor(Pessoa):
         super().__init__(matricula)
     
     def emitirRelatorio(self):
-        with open('profesores.txt', 'r') as arquivoProfessor:
-            linhasProf = arquivoProfessor.readlines()
-            for linha in linhasProf:
-                professor = linha.split(':')
-                if (professor[0] == self.matricula):
-                    print()
+        print("\n---###---")
+        print("Matricula do professor:", self.matricula)
+        with open("professores.txt", 'r') as arquivo:
+            linhas = arquivo.readlines()
+            for linha in linhas:
+                dados = linha.split(":")
+                if (self.matricula == int(dados[0])):
+                    print("Nome do professor:", dados[1])
                     break
-
-        with open('disciplinas.txt', 'r') as arquivoDisciplina:
-            linhasDisc = arquivoDisciplina.readlines()
-            for linha in linhasDisc:
-                disciplina = linha.split(':')
-
-
-        
+        print("Disciplinas do professor:")
+        print(self.codigosDisciplinas)

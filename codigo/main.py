@@ -3,8 +3,13 @@ from disciplina import Disciplina
 from funcoes import checa_existe, estrutura_disciplina, estrutura_professor, estrutura_aluno
 from professor import Professor
 
-for nome in ['alunos.txt', 'professores.txt', 'disciplinas.txt']:
-    dados_disciplina = checa_existe(nome)
+for index,nome in enumerate(['alunos.txt', 'professores.txt', 'disciplinas.txt']):
+    if (index == 0):
+        dados_aluno = checa_existe(nome)
+    elif (index == 1):
+        dados_professor = checa_existe(nome)
+    else:
+        dados_disciplina = checa_existe(nome)
 
 disciplinas_dic = {}
 professores_dic = {}
@@ -15,6 +20,16 @@ try:
         dados = linha.split(':')
         codigo_disciplina = dados[0]
         disciplinas_dic[codigo_disciplina] = dados[1:3]
+except TypeError as error:
+    pass
+
+try:
+    for linhas in dados_professor:
+        dados = linhas.split(':')
+        matricula = dados[0]
+        disciplinas_professor = dados[2:len(dados) - 1]
+        professores_dic[matricula] = [dados[1], disciplinas_professor[0].split(',')]
+    
 except TypeError as error:
     pass
 
@@ -72,7 +87,7 @@ FORMATAÇÃO DOS DICIONÁRIOs
 ---Alunos---
 {matricula: ['Nome', ["#001,100,20,40,80", "#002, 0, 50, 60, 100"]]}
 ---Professores---
-{matricula: ['Nome']}
+{matricula: ['Nome', ["#001","#002"]]}
 ---Disciplinas---
 {'#001': ['PEOO', 120]}
 """
