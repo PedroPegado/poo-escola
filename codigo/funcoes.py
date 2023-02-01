@@ -72,7 +72,6 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
             disciplinas_professor = ""
 
             if acao_user == 1:
-                teste = []
                 while True:
                     print('Digite o código da disciplina(0 para finalizar)')
                     codigo_disciplina = input('> #')
@@ -88,10 +87,8 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
                         else:
                             disciplinas_professor += f'#{codigo_disciplina},'
 
+
                 professor = Professor(matricula_professor)
-                print(disciplinas_professor.split(","))
-                print(disciplinas_professor)
-#                professor.codigosDisciplinas = disciplinas_professor.split(",")
                 linha = f"{matricula_professor}:{nome_professor}:{disciplinas_professor}:\n"
       
                 with open('professores.txt', 'a') as arquivo:
