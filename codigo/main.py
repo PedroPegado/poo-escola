@@ -32,6 +32,15 @@ try:
 except TypeError as error:
     pass
 
+try:
+    for linha in dados_aluno:
+        dados = linha.split(':')
+        matricula = dados[0]
+        disciplinas_aluno = dados[2:len(dados) - 1]
+        alunos_dic[matricula] = [dados[1], disciplinas_aluno[0].split(':')]
+except TypeError as error:
+    pass
+
 while True:
     print('''\nDIGITE A OPÇÃO DESEJADA:
     1 - DISCIPLINA

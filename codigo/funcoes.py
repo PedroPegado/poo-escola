@@ -64,7 +64,6 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
     if acao_user == 1:
         print('Matricula do professor:')
         matricula_professor = input('> ')
-
         if dicionario_professores.get(f'{matricula_professor}') == None:
             print('Nome do professor: ')
             nome_professor = input('> ')
@@ -87,7 +86,6 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
                             print("Essa disciplina já foi cadastrada para esse professor.")
                         else:
                             disciplinas_professor += f'#{codigo_disciplina},'
-
 
                 professor = Professor(matricula_professor)
                 linha = f"{matricula_professor}:{nome_professor}:{disciplinas_professor}:\n"
@@ -145,10 +143,12 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
                     if (dicionario_disciplinas.get(f"#{codigo_disciplina}") == None and codigo_disciplina != "0"):
                         print("Essa disciplina não existe.")
                         continue
+                    elif codigo_disciplina == '0':
+                        disciplinas_alunos = disciplinas_alunos[0:len(disciplinas_alunos) - 1]
+                        break
                     else:
-                        if codigo_disciplina == '0':
-                            disciplinas_alunos = disciplinas_alunos[0:len(disciplinas_alunos) - 1]
-                            break
+                        if f'#{codigo_disciplina}' in disciplinas_alunos:
+                            print('Essa disciplina já foi cadastrada para esse aluno.')
                         else:
                             disciplinas_alunos += f'#{codigo_disciplina},0,0,0,0:'
                 
@@ -166,7 +166,6 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
                     arquivo.write(linha)
             
             dicionario_alunos[matricula_aluno] = [nome_aluno,disciplinas_alunos]
-            
             print('\n====================\nAlune cadastrade\n====================')
             return dicionario_alunos
         else:
