@@ -72,21 +72,26 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
             disciplinas_professor = ""
 
             if acao_user == 1:
+                teste = []
                 while True:
                     print('Digite o código da disciplina(0 para finalizar)')
                     codigo_disciplina = input('> #')
                     if (dicionario_disciplinas.get(f"#{codigo_disciplina}") == None and codigo_disciplina != "0"):
                         print("Essa disciplina não existe.")
                         continue
+                    elif (codigo_disciplina == '0'):
+                        disciplinas_professor = disciplinas_professor[0:len(disciplinas_professor) - 1]
+                        break
                     else:
-                        if codigo_disciplina == '0':
-                            disciplinas_professor = disciplinas_professor[0:len(disciplinas_professor) - 1]
-                            break
+                        if (f"#{codigo_disciplina}" in disciplinas_professor):
+                            print("Essa disciplina já foi cadastrada para esse professor.")
                         else:
                             disciplinas_professor += f'#{codigo_disciplina},'
 
                 professor = Professor(matricula_professor)
-                professor.codigosDisciplinas = disciplinas_professor.split(",")
+                print(disciplinas_professor.split(","))
+                print(disciplinas_professor)
+#                professor.codigosDisciplinas = disciplinas_professor.split(",")
                 linha = f"{matricula_professor}:{nome_professor}:{disciplinas_professor}:\n"
       
                 with open('professores.txt', 'a') as arquivo:
@@ -113,7 +118,6 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
             print("Professor inexistente.")
         else:
             professor = Professor(matricula_professor)
-            professor.codigosDisciplinas = dados_prof[1].split(",")
             professor.emitirRelatorio()
 
 
