@@ -3,6 +3,7 @@ from disciplina import Disciplina
 from pessoa import Pessoa
 from professor import Professor
 
+
 def checa_arquivo_existe(nomeArquivo):
     try:
         with open(nomeArquivo, 'r') as arquivo:
@@ -118,7 +119,7 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
 
 
 
-def estrutura_aluno(dicionario):
+def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
     print('''\nDIGITE A OPÇÃO DESEJADA:
     1 - CADASTRAR ALUNO
     2 - EMITIR RELATÓRIO
@@ -129,9 +130,45 @@ def estrutura_aluno(dicionario):
     if (acao_user == 1):
         print("Matricula do aluno:")
         matricula_aluno = input("> ")
-        if (dicionario.get(matricula_aluno) == None):
+        if (dicionario_alunos.get(matricula_aluno) == None):
             print("Nome do aluno:")
             nome_aluno = input("> ")
             print("Gostaria de cadastrar as disciplinas deste aluno agora?")
-            acao_user = input("(1)Sim (0)Não\n> ")
+            acao_user = int(input("(1)Sim (0)Não\n> "))
+            disciplinas_alunos = ""
+            
+            if acao_user == 1:
+                while True:
+                    print('Digite o código da disciplina(0 para finalizar)')
+                    codigo_disciplina = input('> #')
+                    if (dicionario_disciplinas.get(f"#{codigo_disciplina}") == None and codigo_disciplina != "0"):
+                        print("Essa disciplina não existe.")
+                        continue
+                    else:
+                        if codigo_disciplina == '0':
+                            disciplinas_alunos = disciplinas_alunos[0:len(disciplinas_alunos) - 1]
+                            break
+                        else:
+                            disciplinas_alunos += f'#{codigo_disciplina},0,0,0,0:'
+                
+                aluno = Aluno(matricula_aluno)
+                linha = f'{matricula_aluno}:{nome_aluno}:{disciplinas_alunos}:\n'
+                
+                with open('alunos.txt', 'a') as arquivo:
+                    arquivo.write(linha)
+            
+            elif acao_user == 0:
+                aluno = Aluno(matricula_aluno)
+                linha = f'{matricula_aluno}:{nome_aluno}:{None}:\n'
+                
+                with open('alunos.txt', 'a') as arquivo:
+                    arquivo.write(linha)
+            
+            dicionario_alunos[matricula_aluno] = [nome_aluno,disciplinas_alunos]
+            
+            print('\n====================\nAlune cadastrade\n====================')
+            return dicionario_alunos
+        else:
+            print('\n====================\nAlune já cadastrade\n====================')
 
+        

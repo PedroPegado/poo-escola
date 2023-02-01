@@ -59,7 +59,11 @@ while True:
                 professores_dic = retorno
 
         elif acao_usuario == 3:
-            retorno = estrutura_aluno(alunos_dic)
+            retorno = estrutura_aluno(alunos_dic, disciplinas_dic)
+            if retorno == None:
+                pass
+            else:
+                alunos_dic = retorno
             
         elif acao_usuario == 0:
             print("Até breve...")
