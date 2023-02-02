@@ -121,7 +121,7 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
 def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
     print('''\nDIGITE A OPÇÃO DESEJADA:
     1 - CADASTRAR ALUNO
-    2 - EMITIR RELATÓRIO
+    2 - EMITIR BOLETIM
     3 - ALTERAR NOTAS
     4 - ALTERAR DISCIPLINAS''')
     acao_user = int(input("> "))
