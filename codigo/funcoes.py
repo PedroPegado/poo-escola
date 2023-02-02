@@ -160,7 +160,7 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
             
             elif acao_user == 0:
                 aluno = Aluno(matricula_aluno)
-                linha = f'{matricula_aluno}:{nome_aluno}:{None}:\n'
+                linha = f'{matricula_aluno}:{nome_aluno}::\n'
                 
                 with open('alunos.txt', 'a') as arquivo:
                     arquivo.write(linha)
@@ -170,5 +170,13 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
             return dicionario_alunos
         else:
             print('\n====================\nAlune já cadastrade\n====================')
-
+    elif acao_user == 2:
+        print("Digite a matrícula do aluno:")
+        matricula_aluno = int(input())
+        dados_aluno = dicionario_alunos.get(f"{matricula_aluno}")
+        if (dados_aluno == None):
+            print("Aluno inexistente")
+        else:
+            aluno = Aluno(matricula_aluno)
+            aluno.emitirBoletim()
         

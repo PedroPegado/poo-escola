@@ -12,11 +12,29 @@ class Aluno(Pessoa):
             for linha in linhas:
                 dados = linha.split(':')
                 if f'{self.matricula}' == dados[0]:
-                    self.codigosDisciplinas = dados[2].split(':')
+                    self.codigosDisciplinas = dados[2:]
                     break
                 
     def emitirBoletim(self):
-        pass
+        print('\n---###---')
+        print('Matricula do aluno:', self.matricula)
+        with open('alunos.txt', 'r') as arquivo:
+            linhas = arquivo.readlines()
+            for linha in linhas:
+                dados = linha.split(':')
+                if self.matricula == int(dados[0]):
+                    print('Nome do aluno:', dados[1])
+                    break
+        print('Disciplinas do aluno:')
+        with open('disciplinas.txt', 'r') as arquivo:
+            linhas = arquivo.readlines()
+        for linha in linhas:
+            dados = linha.split(':')
+            codigo_disciplina = dados[0]
+
+            for disciplina in self.codigosDisciplinas:
+                if codigo_disciplina in disciplina:
+                    print(dados[1])
 
     def alterarNotas(self, codigoDisciplina, notas):
         pass
