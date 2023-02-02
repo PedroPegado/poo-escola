@@ -129,9 +129,9 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
     while True:
         print('''\nDIGITE A OPÇÃO DESEJADA:
         1 - CADASTRAR ALUNO
-        2 - EMITIR RELATÓRIO
-        3 - ALTERAR NOTAS
-        4 - ALTERAR DISCIPLINAS
+        2 - EMITIR BOLETIM
+        3 - ALTERAR DISCIPLINAS
+        4 - ALTERAR NOTAS
         0 - VOLTAR''')
         acao_user = int(input("> "))
 
