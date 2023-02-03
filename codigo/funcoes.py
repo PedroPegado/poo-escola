@@ -187,5 +187,23 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
             else:
                 aluno = Aluno(matricula_aluno)
                 aluno.emitirBoletim()
+        
+        elif acao_user == 3:
+            print('Digite a mátricula do aluno:')
+            matricula_aluno = int(input('> '))
+            dados_aluno = dicionario_alunos.get(f'{matricula_aluno}')
+            if dados_aluno == None:
+                print('Aluno inexistente.')
+            else:
+                print('Digite o código da disciplina:')
+                codDisci = input('> #')
+                notas = []
+                for i in range(4):
+                    print('Digite as notas:')
+                    nota = float(input('> '))
+                    notas.append(nota)
+                aluno = Aluno(matricula_aluno)
+                aluno.alterarNotas(codDisci, notas)
+            
         elif (acao_user == 0):
             return None    

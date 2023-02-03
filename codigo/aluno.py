@@ -36,5 +36,6 @@ class Aluno(Pessoa):
                 if codigo_disciplina in disciplina:
                     boletim = disciplina.split(',')
                     print(f'{dados[1]} - {boletim[1:]}')
+                    
     def alterarNotas(self, codigoDisciplina, notas):
-        pass
+        
