@@ -59,7 +59,6 @@ while True:
                 pass
             else:
                 disciplinas_dic = retorno
-
         elif acao_usuario == 2:
             retorno = estrutura_professor(professores_dic, disciplinas_dic)
             if retorno == None:
