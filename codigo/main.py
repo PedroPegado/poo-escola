@@ -73,7 +73,6 @@ while True:
                 pass
             else:
                 alunos_dic = retorno
-                print(alunos_dic)
             
         elif acao_usuario == 0:
             print("Até breve...")
