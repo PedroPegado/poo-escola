@@ -260,9 +260,9 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
             aluno = Aluno(matricula_aluno)
             aluno.emitirBoletim()
         
-        elif acao_user == 3:
+        elif acao_user == 4:
             print('Digite a mátricula do aluno:')
-            matricula_aluno = int(input('> '))
+            matricula_aluno = (input('> '))
             dados_aluno = dicionario_alunos.get(f'{matricula_aluno}')
             if dados_aluno == None:
                 print('Aluno inexistente.')
@@ -270,12 +270,73 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
 
             print('Digite o código da disciplina:')
             codigo_disciplina = input('> #')
+            dados_disciplina = dicionario_disciplinas.get(f'#{codigo_disciplina}')
+            if dados_disciplina == None:
+                print('Disciplina inexistente.')
+                continue
+            
             notas = []
             for i in range(4):
                 print('Digite as notas:')
-                nota = float(input('> '))
+                nota = input('> ')
                 notas.append(nota)
             aluno = Aluno(matricula_aluno)
             aluno.alterarNotas(codigo_disciplina, notas)
+            
+            with open('alunos.txt', 'r') as arquivo:
+                dados = arquivo.readlines()
+                
+            
+            cont = 0
+            
+            for linha in dados:
+                aluno = linha.split(':')
+                if aluno[0] == matricula_aluno:
+                    for dados in aluno[2:]:
+                        disci = dados.split(',')
+                        if f'#{codigo_disciplina}' == disci[0]:
+                            for c in range(1, 5):
+                                disci[c] = notas[c-1]
+                            linha_final = cont
+                            notasAlteradas = disci
+                            break
+                cont += 1
+            
+            with open('alunos.txt', 'r') as arquivo:
+                dados = arquivo.readlines()
+            
+            dado = dados[linha_final].split(':')
+            
+
+            str = ''
+            
+            print(dados)
+            
+            for c in notasAlteradas:
+                str += f'{c},'
+                
+            cont2 = 0
+            
+            for i in dado:
+                if notasAlteradas[0] in i:
+                    dado[cont2] = str
+                cont2 += 1
+
+            str2 = ''
+            cont = 0
+            
+            for c in dado:
+                if cont == len(dado) - 1:
+                    str2 += f'{c}'
+                else:
+                    str2 += f'{c}:'
+                cont+=1
+            
+            dados[linha_final] = str2
+            
+            with open('alunos.txt', 'w+') as arquivo:
+                arquivo.writelines(dados)
+                    
+                
         elif (acao_user == 0):
             return None    

@@ -38,4 +38,4 @@ class Aluno(Pessoa):
                     print(f'{dados[1]} - {boletim[1:]}')
                     
     def alterarNotas(self, codigoDisciplina, notas):
-        
+        pass
