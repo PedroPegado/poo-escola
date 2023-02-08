@@ -37,5 +37,18 @@ class Aluno(Pessoa):
                     boletim = disciplina.split(',')
                     print(f'{dados[1]} - {boletim[1:]}')
                     
-    def alterarNotas(self, codigoDisciplina, notas):
-        pass
+    def alterarNotas(self, codigoDisciplina, dicionarioDisciplinas, dicionarioAluno):
+        dados_disciplina = dicionarioDisciplinas.get(f'#{codigoDisciplina}')
+        
+        if dados_disciplina == None:
+            print('Disciplina inexistente')
+            return False
+        
+        notas = []
+        
+        for c in range(1, 5):
+            print(f'Digite a nota do {c}° bimestre:')
+            nota = input('> ')
+            notas.append(nota)
+        
+        
