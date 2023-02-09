@@ -3,46 +3,66 @@ class Pessoa:
         self.matricula = matricula
         self.codigosDisciplinas = []
     
-    def alterarDisciplina(self, codigoDisciplina, dicionarioDisciplinas, dicionarioPessoa):
-        dados_disciplina = dicionarioDisciplinas.get(f"#{codigoDisciplina}")
-
-        if (dados_disciplina == None):
-            print("Disciplina inexistente.")
-            return False
+    def alterarDisciplina(self, codigoDisciplina, arquivoPessoa):
+        with open(arquivoPessoa, 'r') as arquivo:
+            banco = arquivo.readlines()
         
-        dados_pessoa = dicionarioPessoa.get(f"{self.matricula}")
-
-        if (dados_pessoa[1] == ""):
-            disciplinas_pessoa = []
-        else:
-            disciplinas_pessoa = dados_pessoa[1]
-
-        print("1 - ADICIONAR\n2 - EXCLUIR")
-        acao_user = int(input("> "))
-
-        try:
-            if (disciplinas_pessoa[0] == "None"):
-                pass
-        except:
-            if (acao_user == 2):
-                print("Essa pessoa não possui disciplinas.")
-                return False
+        for linha in banco:
+            ind_prof = linha.split(':')
+            if ind_prof[0] == self.matricula:
+                indice = banco.index(linha)
+                break
         
-        if (acao_user == 1):
-            if (disciplinas_pessoa[0] == "None"):
-                disciplinas_pessoa[0] = f"#{codigoDisciplina}"
+        splitado = banco[indice].split(':')
+        
+        print('1 - ADICIONAR\n2 - EXCLUIR')
+        opc_user = int(input('> '))
+        
+        if opc_user == 1:
+            indice_add  = splitado.index('\n')
+            
+            if f'#{codigoDisciplina}' not in splitado:
+                splitado.insert(indice_add, f'#{codigoDisciplina}')
             else:
-                if (len(str(self.matricula)) == 14):
-                    disciplinas_pessoa.append(f"#{codigoDisciplina},0,0,0,0")
+                print('Disciplina já cadastrada nesse professor.')
+            
+            cont = 0
+            novo_prof = ''
+            
+            for ind in splitado:
+                if cont == len(splitado) - 1:
+                    novo_prof += f'{ind}'
                 else:
-                    disciplinas_pessoa.append(f"#{codigoDisciplina}")
-            self.codigosDisciplinas.append(f"#{codigoDisciplina}")
-        elif (acao_user == 2):
-            indice = disciplinas_pessoa.index(f"#{codigoDisciplina}")
-            disciplinas_pessoa.pop(indice)
-            disciplinas_pessoa.insert(indice, "None")
-            self.codigosDisciplinas.remove(f"#{codigoDisciplina}")
+                    novo_prof += f'{ind}:'
+                cont+=1
+            
+            banco[indice] = novo_prof
+            
+            with open('professores.txt', 'w') as arquivo:
+                arquivo.writelines(banco)
+            
+        elif opc_user == 2:
+            if f'#{codigoDisciplina}' not in splitado:
+                print('Disciplina não cadastrada nesse professor.')
+            else:
+                for ind in splitado[2:]:
+                    if ind[0:3] == f'#{codigoDisciplina}':
+                        splitado.remove(ind)
+            
+                cont = 0
+                novo_prof = ''
+                
+                for ind in splitado:
+                    if cont == len(splitado) - 1:
+                        novo_prof += f'{ind}'
+                    else:
+                        novo_prof += f'{ind}:'
+                    cont+=1
+                
+                banco[indice] = novo_prof
+                
+                with open('professores.txt', 'w') as arquivo:
+                    arquivo.writelines(banco)
         
-        dicionarioPessoa[f"{self.matricula}"] = [dados_pessoa[0], disciplinas_pessoa]
-
-        return dicionarioPessoa
+        
+        

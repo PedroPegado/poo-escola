@@ -37,7 +37,7 @@ class Aluno(Pessoa):
                     boletim = disciplina.split(',')
                     print(f'{dados[1]} - {boletim[1:]}')
                     
-    def alterarNotas(self, matricula, codigoDisciplina):        
+    def alterarNotas(self, codigoDisciplina):        
         notas = []
         
         for c in range(1, 5):
@@ -50,7 +50,7 @@ class Aluno(Pessoa):
             
         for linha in banco:
             ind_alunos = linha.split(':')
-            if ind_alunos[0] == matricula:
+            if ind_alunos[0] == self.matricula:
                 indice = banco.index(linha)
                 break
         

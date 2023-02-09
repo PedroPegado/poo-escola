@@ -94,7 +94,7 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
                         if (f"#{codigo_disciplina}" in disciplinas_professor):
                             print("Essa disciplina já foi cadastrada para esse professor.")
                             continue
-                        disciplinas_professor += f'#{codigo_disciplina},'
+                        disciplinas_professor += f'#{codigo_disciplina}:'
 
                     professor = Professor(matricula_professor)
                     linha = f"{matricula_professor}:{nome_professor}:{disciplinas_professor}:\n"
@@ -104,7 +104,7 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
                         
                 elif acao_user == 0:
                     professor = Professor(matricula_professor)
-                    linha = f"{matricula_professor}:{nome_professor}:{None}:\n"
+                    linha = f"{matricula_professor}:{nome_professor}:\n"
 
                     with open('professores.txt', 'a') as arquivo:
                         arquivo.write(linha)
@@ -127,46 +127,27 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
             professor.emitirRelatorio()
 
         elif (acao_user == 3):
-            print("Digite a matrícula do professor:")
-            matricula_professor = int(input())
-            dados_prof = dicionario_professores.get(f"{matricula_professor}")
-
-            if (dados_prof == None):
-                print("Professor inexistente.")
+            print('Digite a matrícula do professor:')
+            matricula_professor = input('> ')
+            
+            dados_prof = dicionario_professores.get(f'{matricula_professor}')
+            
+            if dados_prof == None:
+                print('Professor inexistente')
                 continue
-            disciplinas_professor = dados_prof[1]
-
-            print("Informe o código da disciplina que deseja alterar.")
-            codigo_disciplina = input("> #")
+            
+            print('Digite o código da disciplina:')
+            codigo_disciplina = input('> #')
+            
+            dados_disciplina = dicionario_disciplinas.get(f'#{codigo_disciplina}')
+            
+            if dados_disciplina == None:
+                print('Disciplina inexistente.')
+                continue
+                
             professor = Professor(matricula_professor)
-            retorno = professor.alterarDisciplina(codigo_disciplina, dicionario_disciplinas, dicionario_professores)
-            print(retorno)
-            print(type(retorno))
-
-            if (retorno != False):
-                dicionario_professores = retorno
-                dados_prof = dicionario_professores.get(f"{matricula_professor}")
-
-                disciplinas = ''
-                for disciplina in dados_prof[1]:
-                    disciplinas += disciplina + ":"
-
-                with open("professores.txt", 'r') as arquivo:
-                    linhas = arquivo.readlines()
-
-                for indice, linha in enumerate(linhas):
-                    dados = linha.split(":")
-                    if (dados[0] == f"{matricula_professor}"):
-                        linhas.pop(indice)
-                        if (dados[2][indice] == "None"):
-                            linhas.insert(indice, f"{matricula_professor}:{dados_prof[0]}:None:\n")
-                        else:
-                            linhas.insert(indice, f"{matricula_professor}:{dados_prof[0]}:{disciplinas}\n")
-
-                        break
-
-                with open("professores.txt", 'w') as arquivo:
-                    arquivo.writelines(linhas)
+            professor.alterarDisciplina(codigo_disciplina, 'professores.txt')
+            
         elif (acao_user == 0):
             return None
 
@@ -256,83 +237,9 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
                 print('Disciplina inexistente')
                 continue
              
-            eu = Aluno(matricula_aluno)
-            eu.alterarNotas(matricula_aluno, codigo_disciplina)
-            # print('Digite a mátricula do aluno:')
-            # matricula_aluno = (input('> '))
-            # dados_aluno = dicionario_alunos.get(f'{matricula_aluno}')
-            # if dados_aluno == None:
-            #     print('Aluno inexistente.')
-            #     continue
+            aluno = Aluno(matricula_aluno)
+            aluno.alterarNotas(codigo_disciplina)
 
-            # print('Digite o código da disciplina:')
-            # codigo_disciplina = input('> #')
-            # dados_disciplina = dicionario_disciplinas.get(f'#{codigo_disciplina}')
-            # if dados_disciplina == None:
-            #     print('Disciplina inexistente.')
-            #     continue
-            
-            # notas = []
-            # for i in range(4):
-            #     print('Digite as notas:')
-            #     nota = input('> ')
-            #     notas.append(nota)
-                
-            # aluno = Aluno(matricula_aluno)
-            # aluno.alterarNotas(codigo_disciplina, notas)
-            
-                
-            # cont = 0
-            
-            # for linha in dados:
-            #     aluno = linha.split(':')
-            #     if aluno[0] == matricula_aluno:
-            #         for dados in aluno[2:]:
-            #             disci = dados.split(',')
-            #             if f'#{codigo_disciplina}' == disci[0]:
-            #                 for c in range(1, 5):
-            #                     disci[c] = notas[c-1]
-            #                 linha_final = cont
-            #                 notas_alteradas = disci
-            #                 break
-            #     cont += 1
-            
-            # with open('alunos.txt', 'r') as arquivo:
-            #     dados = arquivo.readlines()
-            
-            # dado = dados[linha_final].split(':')
-            
-
-            # str = ''
-            
-            # print(dados)
-            
-            # for c in notasAlteradas:
-            #     str += f'{c},'
-                
-            # cont2 = 0
-            
-            # for i in dado:
-            #     if notasAlteradas[0] in i:
-            #         dado[cont2] = str
-            #     cont2 += 1
-
-            # str2 = ''
-            # cont = 0
-            
-            # for c in dado:
-            #     if cont == len(dado) - 1:
-            #         str2 += f'{c}'
-            #     else:
-            #         str2 += f'{c}:'
-            #     cont+=1
-            
-            # dados[linha_final] = str2
-            
-            # with open('alunos.txt', 'w+') as arquivo:
-            #     arquivo.writelines(dados)
-                    
-                
         elif (acao_user == 0):
             return None    
 
