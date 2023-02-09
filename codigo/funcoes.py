@@ -70,7 +70,10 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
         if acao_user == 1:
             print('Matricula do professor:')
             matricula_professor = input('> ')
-            if dicionario_professores.get(f'{matricula_professor}') == None:
+            if dicionario_professores.get(f'{matricula_professor}') != None:
+                print('\n====================\nProfessore já cadastrade\n====================')
+                continue
+            else:
                 print('Nome do professor: ')
                 nome_professor = input('> ')
                 print('Gostaria de cadastrar as disciplinas deste professor agora?')
@@ -110,18 +113,19 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
 
                 print('\n====================\nProfessore cadastrade\n====================')
                 return dicionario_professores
-            else:
-                print('\n====================\nProfessore já cadastrade\n====================')
+
         elif (acao_user == 2):
             print("Digite a matrícula do professor:")
             matricula_professor = int(input())
             dados_prof = dicionario_professores.get(f"{matricula_professor}")
+
             if (dados_prof == None):
                 print("Professor inexistente.")
                 continue
 
             professor = Professor(matricula_professor)
             professor.emitirRelatorio()
+
         elif (acao_user == 3):
             print("Digite a matrícula do professor:")
             matricula_professor = int(input())
@@ -134,62 +138,35 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
 
             print("Informe o código da disciplina que deseja alterar.")
             codigo_disciplina = input("> #")
-            dados_disciplina = dicionario_disciplinas.get(f"#{codigo_disciplina}")
+            professor = Professor(matricula_professor)
+            retorno = professor.alterarDisciplina(codigo_disciplina, dicionario_disciplinas, dicionario_professores)
+            print(retorno)
+            print(type(retorno))
 
-            if (dados_disciplina == None):
-                print("Disciplina inexistente.")
-                continue
+            if (retorno != False):
+                dicionario_professores = retorno
+                dados_prof = dicionario_professores.get(f"{matricula_professor}")
 
-            print("(1)Adicionar (2)Excluir")
-            acao_user = int(input("> "))
+                disciplinas = ''
+                for disciplina in dados_prof[1]:
+                    disciplinas += disciplina + ":"
 
-            if (disciplinas_professor[0] == "None"):
-                novas_disciplinas = []
-                if (acao_user == 2):
-                    print("Esse professor não tem disciplinas.")
-                    continue
-            else:
-                novas_disciplinas = disciplinas_professor
+                with open("professores.txt", 'r') as arquivo:
+                    linhas = arquivo.readlines()
 
-            if (acao_user == 1):
-                novas_disciplinas.append(f"#{codigo_disciplina}")
-            elif (acao_user == 2):
-                index = 0
-                for disciplina in disciplinas_professor:
-                    if (f"#{codigo_disciplina}" == disciplina):
-                        novas_disciplinas.pop(index)
+                for indice, linha in enumerate(linhas):
+                    dados = linha.split(":")
+                    if (dados[0] == f"{matricula_professor}"):
+                        linhas.pop(indice)
+                        if (dados[2][indice] == "None"):
+                            linhas.insert(indice, f"{matricula_professor}:{dados_prof[0]}:None:\n")
+                        else:
+                            linhas.insert(indice, f"{matricula_professor}:{dados_prof[0]}:{disciplinas}\n")
+
                         break
-                    index = index + 1
 
-            dicionario_professores[f"{matricula_professor}"] = [dados_prof[0], novas_disciplinas]
-            with open("professores.txt", 'r') as arquivo:
-                linhas = arquivo.readlines()
-            disciplinas = ''
-            cont = 0
-            print(novas_disciplinas)
-            for i in novas_disciplinas:
-                if (cont == len(novas_disciplinas) - 1):
-                    disciplinas += i 
-                else:
-                    disciplinas += i + ":"
-            print(disciplinas)
-
-            if (disciplinas == ""):
-                professor_atualizado = f"{matricula_professor}:{dados_prof[0]}:None:\n"
-            else:
-                professor_atualizado = f"{matricula_professor}:{dados_prof[0]}:{disciplinas}:\n"
-
-            index = 0
-            for linha in linhas:
-                if (str(matricula_professor) == linha.split(":")[0]):
-                    linhas.pop(index)
-                    linhas.insert(index, professor_atualizado)
-                    break
-                index += 1
-            print(linhas)
-            with open("professores.txt", 'w') as arquivo:
-                arquivo.writelines(linhas)
-            return dicionario_professores
+                with open("professores.txt", 'w') as arquivo:
+                    arquivo.writelines(linhas)
         elif (acao_user == 0):
             return None
 
@@ -349,3 +326,4 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
                 
         elif (acao_user == 0):
             return None    
+

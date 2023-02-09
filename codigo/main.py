@@ -27,8 +27,12 @@ try:
     for linhas in dados_professor:
         dados = linhas.split(':')
         matricula = dados[0]
+        nome = dados[1]
         disciplinas_professor = dados[2:len(dados) - 1]
-        professores_dic[matricula] = [dados[1], disciplinas_professor[0].split(',')]
+        try:
+            professores_dic[matricula] = [nome, disciplinas_professor[0].split(',')]
+        except:
+            professores_dic[matricula] = [nome, "None"]
 except TypeError as error:
     pass
 

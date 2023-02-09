@@ -11,30 +11,38 @@ class Pessoa:
             return False
         
         dados_pessoa = dicionarioPessoa.get(f"{self.matricula}")
-        disciplinas_pessoa = dados_pessoa[1]
+
+        if (dados_pessoa[1] == ""):
+            disciplinas_pessoa = []
+        else:
+            disciplinas_pessoa = dados_pessoa[1]
 
         print("1 - ADICIONAR\n2 - EXCLUIR")
         acao_user = int(input("> "))
 
-        if (disciplinas_pessoa[0] == "None"):
-            novas_disciplinas = []
+        try:
+            if (disciplinas_pessoa[0] == "None"):
+                pass
+        except:
             if (acao_user == 2):
                 print("Essa pessoa não possui disciplinas.")
                 return False
         
-        novas_disciplinas = disciplinas_pessoa
-
         if (acao_user == 1):
-            novas_disciplinas.append(f"#{codigoDisciplina}:")
+            if (disciplinas_pessoa[0] == "None"):
+                disciplinas_pessoa[0] = f"#{codigoDisciplina}"
+            else:
+                if (len(str(self.matricula)) == 14):
+                    disciplinas_pessoa.append(f"#{codigoDisciplina},0,0,0,0")
+                else:
+                    disciplinas_pessoa.append(f"#{codigoDisciplina}")
             self.codigosDisciplinas.append(f"#{codigoDisciplina}")
         elif (acao_user == 2):
-            indice = 0
-            for disciplina in disciplinas_pessoa:
-                if (f"#{codigoDisciplina}" == disciplina[0:3]):
-                    novas_disciplinas.pop(indice)
-                    break
-                indice = indice + 1
+            indice = disciplinas_pessoa.index(f"#{codigoDisciplina}")
+            disciplinas_pessoa.pop(indice)
+            disciplinas_pessoa.insert(indice, "None")
+            self.codigosDisciplinas.remove(f"#{codigoDisciplina}")
         
-        dicionarioPessoa[f"{self.matricula}"] = [dados_pessoa[0], novas_disciplinas]
+        dicionarioPessoa[f"{self.matricula}"] = [dados_pessoa[0], disciplinas_pessoa]
 
         return dicionarioPessoa
