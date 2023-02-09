@@ -37,18 +37,52 @@ class Aluno(Pessoa):
                     boletim = disciplina.split(',')
                     print(f'{dados[1]} - {boletim[1:]}')
                     
-    def alterarNotas(self, codigoDisciplina, dicionarioDisciplinas, dicionarioAluno):
-        dados_disciplina = dicionarioDisciplinas.get(f'#{codigoDisciplina}')
-        
-        if dados_disciplina == None:
-            print('Disciplina inexistente')
-            return False
-        
+    def alterarNotas(self, matricula, codigoDisciplina):        
         notas = []
         
         for c in range(1, 5):
             print(f'Digite a nota do {c}° bimestre:')
             nota = input('> ')
             notas.append(nota)
+        
+        with open('alunos.txt', 'r') as arquivo:
+            banco = arquivo.readlines()
+            
+        for linha in banco:
+            ind_alunos = linha.split(':')
+            if ind_alunos[0] == matricula:
+                indice = banco.index(linha)
+                break
+        
+        splitado = banco[indice].split(':')
+        
+        cont = 0 
+        for ind in splitado:
+            if codigoDisciplina in ind:
+                splitado[cont] = f'#{codigoDisciplina},{notas[0]},{notas[1]},{notas[2]},{notas[3]}'
+                break
+            cont+=1
+        
+        cont = 0
+        novo_aluno = ''
+        
+        for ind in splitado:
+            if cont == len(splitado) - 1:
+                novo_aluno += f'{ind}'
+            else:
+                novo_aluno += f'{ind}:'
+            cont+=1
+        
+        banco[indice] = novo_aluno
+        
+        with open('alunos.txt', 'w') as arquivo:
+            arquivo.writelines(banco)
+            
+        
+        
+            
+            
+        
+        
         
         

@@ -250,7 +250,7 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
                 print('\n====================\nAlune já cadastrade\n====================')
         elif acao_user == 2:
             print("Digite a matrícula do aluno:")
-            matricula_aluno = int(input())
+            matricula_aluno = input('> ')
             dados_aluno = dicionario_alunos.get(f"{matricula_aluno}")
 
             if (dados_aluno == None):
@@ -270,8 +270,17 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
                 print('Aluno inexistente')
                 continue
             
+            print('Digite o código da disciplina:')
+            codigo_disciplina = input('> #')
+            
+            dados_disciplina = dicionario_disciplinas.get(f'#{codigo_disciplina}')
+        
+            if dados_disciplina == None:
+                print('Disciplina inexistente')
+                continue
+             
             eu = Aluno(matricula_aluno)
-            eu.alterarNotas('002', dicionario_disciplinas, dicionario_alunos)
+            eu.alterarNotas(matricula_aluno, codigo_disciplina)
             # print('Digite a mátricula do aluno:')
             # matricula_aluno = (input('> '))
             # dados_aluno = dicionario_alunos.get(f'{matricula_aluno}')
@@ -307,7 +316,7 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
             #                 for c in range(1, 5):
             #                     disci[c] = notas[c-1]
             #                 linha_final = cont
-            #                 notasAlteradas = disci
+            #                 notas_alteradas = disci
             #                 break
             #     cont += 1
             
