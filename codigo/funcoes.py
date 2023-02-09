@@ -12,15 +12,26 @@ def checa_arquivo_existe(nomeArquivo):
         with open(nomeArquivo, 'w') as arquivo:
             pass
 
+def validar_acao(mensagem):
+    try:
+        acao_user = int(input(mensagem))
+    except:
+        print("Ação inválida.")
+        return ""
+    else:
+        return acao_user
+
 def estrutura_disciplina(dicionario):
     while True:
         print('''\nDIGITE A OPÇÃO DESEJADA:
         1 - CADASTRAR DISCIPLINA
         2 - EMITIR RELATÓRIO
         0 - VOLTAR''')
-        acao_user = int(input("> "))
+        acao_user = validar_acao("> ")
 
-        if (acao_user == 1):
+        if (acao_user == ""):
+            continue
+        elif (acao_user == 1):
             print("Código da disciplina:")
             codigo_disciplina = input("> #")
 
@@ -65,9 +76,11 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
         2 - EMITIR RELATÓRIO
         3 - ALTERAR DISCIPLINAS
         0 - VOLTAR''')
-        acao_user = int(input("> "))
+        acao_user = validar_acao("> ")
 
-        if acao_user == 1:
+        if (acao_user == ""):
+            continue
+        elif (acao_user == 1):
             print('Matricula do professor:')
             matricula_professor = input('> ')
             if dicionario_professores.get(f'{matricula_professor}') != None:
@@ -77,7 +90,7 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
                 print('Nome do professor: ')
                 nome_professor = input('> ')
                 print('Gostaria de cadastrar as disciplinas deste professor agora?')
-                acao_user = int(input('(1)Sim (0)Não\n> '))
+                acao_user = validar_acao('(1)Sim (0)Não\n> ')
                 disciplinas_professor = ""
 
                 if acao_user == 1:
@@ -88,13 +101,16 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
                             print("Essa disciplina não existe.")
                             continue
                         elif (codigo_disciplina == '0'):
-                            disciplinas_professor = disciplinas_professor[0:len(disciplinas_professor) - 1]
+                            if (disciplinas_professor == ""):
+                                disciplinas_professor == "None"
+                            else:
+                                disciplinas_professor = disciplinas_professor[0:len(disciplinas_professor) - 1]
                             break
 
                         if (f"#{codigo_disciplina}" in disciplinas_professor):
                             print("Essa disciplina já foi cadastrada para esse professor.")
                             continue
-                        disciplinas_professor += f'#{codigo_disciplina},'
+                        disciplinas_professor += f'#{codigo_disciplina}:'
 
                     professor = Professor(matricula_professor)
                     linha = f"{matricula_professor}:{nome_professor}:{disciplinas_professor}:\n"
@@ -180,16 +196,18 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
         3 - ALTERAR DISCIPLINAS
         4 - ALTERAR NOTAS
         0 - VOLTAR''')
-        acao_user = int(input("> "))
+        acao_user = validar_acao("> ")
 
-        if (acao_user == 1):
+        if (acao_user == ""):
+            continue
+        elif (acao_user == 1):
             print("Matricula do aluno:")
             matricula_aluno = input("> ")
             if (dicionario_alunos.get(matricula_aluno) == None):
                 print("Nome do aluno:")
                 nome_aluno = input("> ")
                 print("Gostaria de cadastrar as disciplinas deste aluno agora?")
-                acao_user = int(input("(1)Sim (0)Não\n> "))
+                acao_user = validar_acao("(1)Sim (0)Não\n> ")
                 disciplinas_alunos = ""
                 
                 if acao_user == 1:
@@ -204,7 +222,7 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
                             break
                         else:
                             if f'#{codigo_disciplina}' in disciplinas_alunos:
-                                print('Essa disciplina já foi cadastrada para esse aluno.')
+                                print('Essa disciplina já foi cadastrada para @ alun@.')
                             else:
                                 disciplinas_alunos += f'#{codigo_disciplina},0,0,0,0:'
                     
@@ -221,10 +239,10 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
                         arquivo.write(linha)
                 
                 dicionario_alunos[matricula_aluno] = [nome_aluno,disciplinas_alunos]
-                print('\n====================\nAlune cadastrade\n====================')
+                print('\n====================\nAlun@ cadastrad@\n====================')
                 return dicionario_alunos
             else:
-                print('\n====================\nAlune já cadastrade\n====================')
+                print('\n====================\nAlun@ já cadastrad@\n====================')
         elif acao_user == 2:
             print("Digite a matrícula do aluno:")
             matricula_aluno = input('> ')
