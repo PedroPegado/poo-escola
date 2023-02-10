@@ -51,11 +51,7 @@ except TypeError as error:
     pass
 
 while True:
-    print('''\nDIGITE A OPÇÃO DESEJADA:
-    1 - DISCIPLINA
-    2 - PROFESSOR
-    3 - ALUNO
-    0 - SAIR''')
+    print('''\nDIGITE A OPÇÃO DESEJADA:\n1 - DISCIPLINA\n2 - PROFESSOR\n3 - ALUNO\n0 - SAIR''')
 
     try:
         acao_usuario = int(input('> '))

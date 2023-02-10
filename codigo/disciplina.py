@@ -22,7 +22,7 @@ class Disciplina:
         print("Carga Horária da disciplina:", self.cargaHoraria)
         print(f"Código da disciplina: #{self.codigoDisciplina}")
         if (self.professor == None):
-            print("Professor indeterminado.")
+            print("Professor(a) indeterminado.")
         else:
             print(f"Professor(es):\n{self.professor}\n")
 
