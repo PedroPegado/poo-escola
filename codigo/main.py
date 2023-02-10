@@ -19,7 +19,7 @@ try:
     for linha in dados_disciplina:
         dados = linha.split(':')
         codigo_disciplina = dados[0]
-        disciplinas_dic[codigo_disciplina] = dados[1:3]
+        disciplinas_dic[codigo_disciplina] = dados[1:2]
 except TypeError as error:
     pass
 
@@ -30,7 +30,7 @@ try:
         nome = dados[1]
         disciplinas_professor = dados[2:len(dados) - 1]
         try:
-            professores_dic[matricula] = [nome, disciplinas_professor[0].split(',')]
+            professores_dic[matricula] = [nome, disciplinas_professor]
         except:
             professores_dic[matricula] = [nome, "None"]
 except TypeError as error:
@@ -40,8 +40,13 @@ try:
     for linha in dados_aluno:
         dados = linha.split(':')
         matricula = dados[0]
+        nome = dados[1]
         disciplinas_aluno = dados[2:len(dados) - 1]
-        alunos_dic[matricula] = [dados[1], disciplinas_aluno[0].split(':')]
+        try:
+            alunos_dic[matricula] = [nome, disciplinas_aluno]
+        except:
+            alunos_dic[matricula] = [nome, "None"]
+
 except TypeError as error:
     pass
 
@@ -82,20 +87,12 @@ while True:
             break
 
 """
-TO-DOs
--o- Funções para o menu de disciplina, aluno e professor.
--o- Planejar diagrama de classes da interface gráfica (Kivy e KivyMD).
--o- Atualizar o README.md com instruções para utilizar a interface gráfica (Kivy e KivyMD).
--o- ...
--o- ...
--o- ...
-
 FORMATAÇÃO DOS ARQUIVOS
 ---Alunos---
-matricula:nome:codigoDisciplina, notas:\n
+matricula:nome:codigoDisciplina,notas:\n
 ---Professores---
 matricula:nome:codigoDisciplinas:\n
-212:Gilbran Andrade:#001,#002:\n
+212:Gilbran Andrade:#001:#002:\n
 ---Disciplinas---
 codigoDisciplina:nome:cargaHoraria:\n
 #001:PEOO:160:\n

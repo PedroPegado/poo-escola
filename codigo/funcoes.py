@@ -208,6 +208,7 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
             matricula_aluno = validar_acao("> ")
             if (validar_matricula(matricula_aluno, "aluno") == False):
                 continue
+
             if (dicionario_alunos.get(f"{matricula_aluno}") == None):
                 print("Nome do aluno:")
                 nome_aluno = input("> ")
