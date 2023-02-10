@@ -2,7 +2,7 @@ class Disciplina:
     def __init__(self, codigoDisciplina, nome, cargaHoraria):
         self.cargaHoraria = cargaHoraria
         self.nome = nome
-        self.professor = None
+        self.professor = ""
         self.codigoDisciplina = codigoDisciplina
 
         with open("professores.txt", "r") as arquivo:
@@ -12,8 +12,8 @@ class Disciplina:
             dados = linha.split(":")
             disciplinas_professor = dados[2:]
             if (f"#{self.codigoDisciplina}" in disciplinas_professor):
-                self.professor = dados[1]
-                break
+                self.professor += dados[1] + "\n"
+                continue
         
     
     def emitirRelatorio(self):
@@ -22,7 +22,7 @@ class Disciplina:
         print("Carga Horária da disciplina:", self.cargaHoraria)
         print(f"Código da disciplina: #{self.codigoDisciplina}")
         if (self.professor == None):
-            print("Professor: Indeterminado")
+            print("Professor indeterminado.")
         else:
-            print("Professor:", self.professor)
+            print(f"Professor(es):\n{self.professor}")
         print("---###---")
