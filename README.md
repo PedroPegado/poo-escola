@@ -33,6 +33,7 @@ O software deve ser programado orientado a objetos e todos os dados necessários
 ### Estrutura dos diretórios
 
 * <b>apresentacao</b>: Arquivos PDF referente a apresentação do projeto
+    *[Slide](https://www.canva.com/design/DAFaG6KL5FY/sDMBCE3pulXEo16SVU3u1A/edit)
 * <b>codigo</b>: Código-fonte Python do projeto desenvolvido
     * ATENÇÃO, cada classe deve ser implementada em um arquivo independente
     * O programa deve ser iniciado ao executar o arquivo <b>main.py</b>
