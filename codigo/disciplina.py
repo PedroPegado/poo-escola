@@ -10,8 +10,8 @@ class Disciplina:
 
         for linha in linhas:
             dados = linha.split(":")
-            disciplinas_professor = dados[2]
-            if (f"#{codigoDisciplina}" in disciplinas_professor):
+            disciplinas_professor = dados[2:]
+            if (f"#{self.codigoDisciplina}" in disciplinas_professor):
                 self.professor = dados[1]
                 break
         
