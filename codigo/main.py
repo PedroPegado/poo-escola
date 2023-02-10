@@ -19,7 +19,7 @@ try:
     for linha in dados_disciplina:
         dados = linha.split(':')
         codigo_disciplina = dados[0]
-        disciplinas_dic[codigo_disciplina] = dados[1:2]
+        disciplinas_dic[codigo_disciplina] = dados[1:3]
 except TypeError as error:
     pass
 
