@@ -24,5 +24,19 @@ class Disciplina:
         if (self.professor == None):
             print("Professor indeterminado.")
         else:
-            print(f"Professor(es):\n{self.professor}")
+            print(f"Professor(es):\n{self.professor}\n")
+
+        print("Alunos da disciplina:")
+
+        with open("alunos.txt", 'r') as arquivo:
+            linhas = arquivo.readlines()
+
+        for linha in linhas:
+            dados = linha.split(":")
+            disciplinas_aluno = dados[2:]
+            for disciplina in disciplinas_aluno:
+                if (f"#{self.codigoDisciplina}" == disciplina[0:4]):
+                    print(dados[1])
+                    break
+
         print("---###---")
