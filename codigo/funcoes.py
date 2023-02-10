@@ -35,6 +35,14 @@ def validar_matricula(matricula, pessoa):
         print("A matricula deve ter 6 digitos")
         return False
 
+def validar_codigo(codigo):
+    codigo = str(codigo)
+    tamanho_codigo = len(codigo)
+    if tamanho_codigo == 3:
+        return True
+    print('O código deve ter 3 digitos')
+    return False
+
 def estrutura_disciplina(dicionario):
     while True:
         print('''\nDIGITE A OPÇÃO DESEJADA:
@@ -45,10 +53,14 @@ def estrutura_disciplina(dicionario):
 
         if (acao_user == ""):
             continue
+        
         elif (acao_user == 1):
             print("Código da disciplina:")
             codigo_disciplina = input("> #")
-
+            
+            if validar_codigo(codigo_disciplina) == False:
+                continue
+            
             if dicionario.get(f'#{codigo_disciplina}') == None:
                 print("Carga horaria:")
                 carga_horaria = int(input("> "))
@@ -100,10 +112,7 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
             if (validar_matricula(matricula_professor, "professor") == False):
                 continue
 
-            if dicionario_professores.get(f'{matricula_professor}') != None:
-                print('\n====================\nProfessore já cadastrade\n====================')
-                continue
-            else:
+            if dicionario_professores.get(f'{matricula_professor}') == None:
                 print('Nome do professor: ')
                 nome_professor = input('> ')
                 print('Gostaria de cadastrar as disciplinas deste professor agora?')
@@ -146,6 +155,8 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
 
                 print('\n====================\nProfessore cadastrade\n====================')
                 return dicionario_professores
+
+            print('\n====================\nProfessore já cadastrade\n====================')
 
         elif (acao_user == 2):
             print("Digite a matrícula do professor:")
@@ -203,12 +214,13 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
 
         if (acao_user == ""):
             continue
+        
         elif (acao_user == 1):
             print("Matricula do aluno:")
             matricula_aluno = validar_acao("> ")
             if (validar_matricula(matricula_aluno, "aluno") == False):
                 continue
-
+            
             if (dicionario_alunos.get(f"{matricula_aluno}") == None):
                 print("Nome do aluno:")
                 nome_aluno = input("> ")
@@ -247,8 +259,8 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
                 dicionario_alunos[matricula_aluno] = [nome_aluno,disciplinas_alunos]
                 print('\n====================\nAlun@ cadastrad@\n====================')
                 return dicionario_alunos
-            else:
-                print('\n====================\nAlun@ já cadastrad@\n====================')
+            
+            print('\n====================\nAlun@ já cadastrad@\n====================')
                 
         elif acao_user == 2:
             print("Digite a matrícula do aluno:")
