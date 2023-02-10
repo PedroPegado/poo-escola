@@ -10,7 +10,7 @@ class Professor(Pessoa):
             for linha in linhas:
                 dados = linha.split(":")
                 if (f"{self.matricula}" == dados[0]):
-                    self.codigosDisciplinas = dados[2].split(",")
+                    self.codigosDisciplinas = dados[2:len(dados) - 1]
                     break
                 
     
@@ -31,7 +31,6 @@ class Professor(Pessoa):
         for linha in linhas:
             dados = linha.split(":")
             codigo_disciplina = dados[0]
-
-            for disciplina in self.codigosDisciplinas:
-                if (disciplina == codigo_disciplina):
-                    print(dados[1])
+            if (codigo_disciplina in self.codigosDisciplinas):
+                print(dados[1])
+                continue
