@@ -21,48 +21,85 @@ class Pessoa:
         if opc_user == 1:
             indice_add  = splitado.index('\n')
             
-            if f'#{codigoDisciplina}' not in splitado:
-                splitado.insert(indice_add, f'#{codigoDisciplina}')
-            else:
-                print('Disciplina já cadastrada nesse professor.')
+            if len(self.matricula) == 6:
+                if f'#{codigoDisciplina}' not in splitado:
+                    splitado.insert(indice_add, f'#{codigoDisciplina}')
+                else:
+                    print('Disciplina já cadastrada nesse professor.')
             
+            
+            elif len(self.matricula) == 14:
+                
+                check = 0
+                
+                for ind in splitado:
+                    if f'#{codigoDisciplina}' == ind[0:4]: 
+                        print('Disciplina já cadastrada nesse aluno.')
+                        check += 1
+                        break
+                
+                if check == 0:
+                    splitado.insert(indice_add, f'#{codigoDisciplina},0,0,0,0')
+                    
             cont = 0
-            novo_prof = ''
+            novo_pessoa = ''
             
             for ind in splitado:
                 if cont == len(splitado) - 1:
-                    novo_prof += f'{ind}'
+                    novo_pessoa += f'{ind}'
                 else:
-                    novo_prof += f'{ind}:'
+                    novo_pessoa += f'{ind}:'
                 cont+=1
             
-            banco[indice] = novo_prof
+            banco[indice] = novo_pessoa
             
-            with open('professores.txt', 'w') as arquivo:
+            with open(arquivoPessoa, 'w') as arquivo:
                 arquivo.writelines(banco)
-            
+                
         elif opc_user == 2:
-            if f'#{codigoDisciplina}' not in splitado:
-                print('Disciplina não cadastrada nesse professor.')
-            else:
-                for ind in splitado[2:]:
-                    if ind[0:3] == f'#{codigoDisciplina}':
-                        splitado.remove(ind)
+            if len(self.matricula) == 6:
+                if f'#{codigoDisciplina}' not in splitado:
+                    print('Disciplina não cadastrada nesse professor.')
+                else:
+                    for ind in splitado[2:]:
+                        if ind[0:3] == f'#{codigoDisciplina}':
+                            splitado.remove(ind)
             
-                cont = 0
-                novo_prof = ''
+            elif len(self.matricula) == 14:
+                check = 0
                 
                 for ind in splitado:
-                    if cont == len(splitado) - 1:
-                        novo_prof += f'{ind}'
+                    if f'#{codigoDisciplina}' != ind[0:4]:
+                        check = 1
                     else:
-                        novo_prof += f'{ind}:'
-                    cont+=1
+                        check = 0
+                        break
+
                 
-                banco[indice] = novo_prof
+                if check == 1:
+                    print('Disciplina não cadastrada nesse aluno.')
+                elif check == 0:
+                    for ind in splitado:
+                        if f'#{codigoDisciplina}' in ind:
+                            splitado.remove(ind)
                 
-                with open('professores.txt', 'w') as arquivo:
-                    arquivo.writelines(banco)
+                print(splitado)
+                     
+            cont = 0
+            novo_pessoa = ''
+            
+            for ind in splitado:
+                if cont == len(splitado) - 1:
+                    novo_pessoa += f'{ind}'
+                else:
+                    novo_pessoa += f'{ind}:'
+                cont+=1
+            
+            banco[indice] = novo_pessoa
+            
+            with open(arquivoPessoa, 'w') as arquivo:
+                arquivo.writelines(banco)
+            
         
         
         

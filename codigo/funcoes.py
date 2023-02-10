@@ -149,7 +149,7 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
             dados_prof = dicionario_professores.get(f'{matricula_professor}')
             
             if dados_prof == None:
-                print('Professor inexistente')
+                print('Professor inexistente.')
                 continue
             
             print('Digite o código da disciplina:')
@@ -224,6 +224,7 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
                 return dicionario_alunos
             else:
                 print('\n====================\nAlun@ já cadastrad@\n====================')
+                
         elif acao_user == 2:
             print("Digite a matrícula do aluno:")
             matricula_aluno = input('> ')
@@ -236,6 +237,30 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
             aluno = Aluno(matricula_aluno)
             aluno.emitirBoletim()
         
+        elif acao_user == 3:
+            print('Digite a matrícula do aluno:')
+            matricula_aluno = input('> ')
+            
+            dados_aluno = dicionario_alunos.get(f'{matricula_aluno}')
+            
+            if dados_aluno == None:
+                print('Aluno inexisteste.')
+                continue
+            
+            print('Digite o código da disciplina:')
+            codigo_disciplina = input('> #')
+            
+            dados_disciplina = dicionario_disciplinas.get(f'#{codigo_disciplina}')
+            
+            if dados_disciplina == None:
+                print('Disciplina inexistente.')
+                continue
+            
+            aluno = Aluno(matricula_aluno)
+            aluno.alterarDisciplina(codigo_disciplina, 'alunos.txt')
+            
+            
+            
         elif acao_user == 4:
             print('Digite a matrícula do aluno:')
             matricula_aluno = input('> ')
