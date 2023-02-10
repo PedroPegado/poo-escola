@@ -21,6 +21,20 @@ def validar_acao(mensagem):
     else:
         return acao_user
 
+def validar_matricula(matricula, pessoa):
+    matricula = str(matricula)
+    tamanho_matricula = len(matricula)
+    if (pessoa == "aluno"):
+        if (tamanho_matricula == 14):
+            return True
+        print("A matricula deve ter 14 digitos")
+        return False
+    else:
+        if (tamanho_matricula == 6):
+            return True
+        print("A matricula deve ter 6 digitos")
+        return False
+
 def estrutura_disciplina(dicionario):
     while True:
         print('''\nDIGITE A OPÇÃO DESEJADA:
@@ -82,7 +96,10 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
             continue
         elif (acao_user == 1):
             print('Matricula do professor:')
-            matricula_professor = input('> ')
+            matricula_professor = validar_acao("> ")
+            if (validar_matricula(matricula_professor, "professor") == False):
+                continue
+
             if dicionario_professores.get(f'{matricula_professor}') != None:
                 print('\n====================\nProfessore já cadastrade\n====================')
                 continue
@@ -132,7 +149,10 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
 
         elif (acao_user == 2):
             print("Digite a matrícula do professor:")
-            matricula_professor = int(input())
+            matricula_professor = validar_acao("> ")
+            if (validar_matricula(matricula_professor, "professor") == False):
+                continue
+
             dados_prof = dicionario_professores.get(f"{matricula_professor}")
 
             if (dados_prof == None):
@@ -144,7 +164,9 @@ def estrutura_professor(dicionario_professores, dicionario_disciplinas):
 
         elif (acao_user == 3):
             print('Digite a matrícula do professor:')
-            matricula_professor = input('> ')
+            matricula_professor = validar_acao("> ")
+            if (validar_matricula(matricula_professor, "professor") == False):
+                continue
             
             dados_prof = dicionario_professores.get(f'{matricula_professor}')
             
@@ -183,8 +205,10 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
             continue
         elif (acao_user == 1):
             print("Matricula do aluno:")
-            matricula_aluno = input("> ")
-            if (dicionario_alunos.get(matricula_aluno) == None):
+            matricula_aluno = validar_acao("> ")
+            if (validar_matricula(matricula_aluno, "aluno") == False):
+                continue
+            if (dicionario_alunos.get(f"{matricula_aluno}") == None):
                 print("Nome do aluno:")
                 nome_aluno = input("> ")
                 print("Gostaria de cadastrar as disciplinas deste aluno agora?")
@@ -227,7 +251,9 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
                 
         elif acao_user == 2:
             print("Digite a matrícula do aluno:")
-            matricula_aluno = input('> ')
+            matricula_aluno = validar_acao("> ")
+            if (validar_matricula(matricula_aluno, "aluno") == False):
+                continue
             dados_aluno = dicionario_alunos.get(f"{matricula_aluno}")
 
             if (dados_aluno == None):
@@ -239,7 +265,9 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
         
         elif acao_user == 3:
             print('Digite a matrícula do aluno:')
-            matricula_aluno = input('> ')
+            matricula_aluno = validar_acao("> ")
+            if (validar_matricula(matricula_aluno, "aluno") == False):
+                continue
             
             dados_aluno = dicionario_alunos.get(f'{matricula_aluno}')
             
@@ -263,8 +291,9 @@ def estrutura_aluno(dicionario_alunos, dicionario_disciplinas):
             
         elif acao_user == 4:
             print('Digite a matrícula do aluno:')
-            matricula_aluno = input('> ')
-            
+            matricula_aluno = validar_acao("> ")
+            if (validar_matricula(matricula_aluno, "aluno") == False):
+                continue
             dados_aluno = dicionario_alunos.get(f'{matricula_aluno}')
             
             if dados_aluno == None:
