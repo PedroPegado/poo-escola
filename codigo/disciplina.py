@@ -1,42 +1,81 @@
 class Disciplina:
-    def __init__(self, codigoDisciplina, nome, cargaHoraria):
-        self.cargaHoraria = cargaHoraria
-        self.nome = nome
-        self.professor = ""
-        self.codigoDisciplina = codigoDisciplina
+    def __init__(self, codigoDisciplina):
+        self.codigoDisciplina = f"#{codigoDisciplina}"
+        self.professores = []
+        
+        with open("codigos_disciplinas.txt", "r+") as arquivo:
+            linhas = arquivo.readlines()
+
+            if (f"{self.codigoDisciplina}:\n" not in linhas):
+                print("Essa disciplina não existe. Informe os seguintes dados para cadastra-la no sistema.\n")
+                print("Nome da discilina:")
+                self.nome = input("> ")
+                print("Carga Horaria da disciplina:")
+                self.cargaHoraria = int(input("> "))
+                arquivo.write(f"{self.codigoDisciplina}:\n")
+                
+                with open("disciplinas.txt", "a") as arquivo:
+                    arquivo.write(f"{self.codigoDisciplina}:{self.nome}:{self.cargaHoraria}:\n")
+                return None
+
+        with open("disciplinas.txt", "r") as arquivo:
+            linhas = arquivo.readlines()
+
+        for linha in linhas:
+            dados = linha.split(":")
+            if (self.codigoDisciplina == dados[0]):
+                self.nome = dados[1]
+                self.cargaHoraria = dados[2]
+                break
 
         with open("professores.txt", "r") as arquivo:
             linhas = arquivo.readlines()
 
         for linha in linhas:
             dados = linha.split(":")
-            disciplinas_professor = dados[2:]
-            if (f"#{self.codigoDisciplina}" in disciplinas_professor):
-                self.professor += dados[1] + "\n"
-                continue
-        
-    
+
+            if (self.codigoDisciplina in dados[2]):
+                self.professores.append(dados[1])
+
     def emitirRelatorio(self):
-        print("\n---###---")
-        print("Nome da disciplina:", self.nome)
-        print("Carga Horária da disciplina:", self.cargaHoraria)
-        print(f"Código da disciplina: #{self.codigoDisciplina}")
-        if (self.professor == None):
-            print("Professor(a) indeterminado.")
+        print("\nNome da disciplina:")
+        print(self.nome)
+        print("Código da disciplina:")
+        print(self.codigoDisciplina)
+        print("Carga Horaria:")
+        print(self.cargaHoraria)
+        print("Professor(es):")
+        if (self.professores == []):
+            print("Indeterminado")
         else:
-            print(f"Professor(es):\n{self.professor}\n")
+            for professor in self.professores:
+                print(professor)
 
-        print("Alunos da disciplina:")
+        print("Aluno(s):")
+        print("(Nome, N1, N2, N3, N4, MF)")
 
-        with open("alunos.txt", 'r') as arquivo:
+        with open("alunos.txt", "r") as arquivo:
             linhas = arquivo.readlines()
+            disciplina_tem_alunos = False
 
         for linha in linhas:
-            dados = linha.split(":")
-            disciplinas_aluno = dados[2:]
+            dados_aluno = linha.split(":")
+            disciplinas_aluno = dados_aluno[2:]
             for disciplina in disciplinas_aluno:
-                if (f"#{self.codigoDisciplina}" == disciplina[0:4]):
-                    print(dados[1])
+                codigo_disciplina_aluno = disciplina[0:4]
+
+                if (self.codigoDisciplina == codigo_disciplina_aluno):
+                    disciplina_tem_alunos = True
+                    dados_disciplina_aluno = disciplina.split(",")
+                    notas_aluno = dados_disciplina_aluno[1:]                
+                    n1, n2, n3, n4 = [float(x) for x in notas_aluno]
+                    media_final = ((n1 * 2) + (n2 * 2) + (n3 * 3) + (n4 * 3)) / 10
+                    nome_aluno = dados_aluno[1]
+                    print(f"{nome_aluno}, {n1:.2f}, {n2:.2f}, {n3:.2f}, {n4:.2f}, {media_final:.2f}")
                     break
 
-        print("---###---")
+        if (not disciplina_tem_alunos):
+            print("Indeterminado.")
+        print()
+
+

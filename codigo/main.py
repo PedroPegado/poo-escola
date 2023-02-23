@@ -1,105 +1,23 @@
-from aluno import Aluno
+from funcoes import validar_arquivo, validar_acao_usuario, menu_disciplina
+from cores import Cores
 from disciplina import Disciplina
-from funcoes import checa_arquivo_existe, estrutura_disciplina, estrutura_professor, estrutura_aluno
-from professor import Professor
+nomes_arquivos = ["disciplinas.txt", "codigos_disciplinas.txt", "professores.txt", "alunos.txt"]
+cores = Cores()
 
-for index,nome in enumerate(['alunos.txt', 'professores.txt', 'disciplinas.txt']):
-    if (index == 0):
-        dados_aluno = checa_arquivo_existe(nome)
-    elif (index == 1):
-        dados_professor = checa_arquivo_existe(nome)
-    else:
-        dados_disciplina = checa_arquivo_existe(nome)
-
-disciplinas_dic = {}
-professores_dic = {}
-alunos_dic = {}
-
-try:
-    for linha in dados_disciplina:
-        dados = linha.split(':')
-        codigo_disciplina = dados[0]
-        disciplinas_dic[codigo_disciplina] = dados[1:3]
-except TypeError as error:
-    pass
-
-try:
-    for linhas in dados_professor:
-        dados = linhas.split(':')
-        matricula = dados[0]
-        nome = dados[1]
-        disciplinas_professor = dados[2:len(dados) - 1]
-        try:
-            professores_dic[matricula] = [nome, disciplinas_professor]
-        except:
-            professores_dic[matricula] = [nome, "None"]
-except TypeError as error:
-    pass
-
-try:
-    for linha in dados_aluno:
-        dados = linha.split(':')
-        matricula = dados[0]
-        nome = dados[1]
-        disciplinas_aluno = dados[2:len(dados) - 1]
-        try:
-            alunos_dic[matricula] = [nome, disciplinas_aluno]
-        except:
-            alunos_dic[matricula] = [nome, "None"]
-
-except TypeError as error:
-    pass
+for nome in nomes_arquivos:
+    validar_arquivo(nome)
 
 while True:
-    print('''\nDIGITE A OPÇÃO DESEJADA:\n1 - DISCIPLINA\n2 - PROFESSOR\n3 - ALUNO\n0 - SAIR''')
+    print("\n(1)Disciplinas\n(2)Alunos\n(3)Professores\n(0)Encerrar o programa\n")
+    acao_usuario = validar_acao_usuario("> ")
 
-    try:
-        acao_usuario = int(input('> '))
-    except:
-        print("Ação inválida.")
-    else:
-        if acao_usuario == 1:
-            retorno = estrutura_disciplina(disciplinas_dic)
-            if (retorno == None):
-                pass
-            else:
-                disciplinas_dic = retorno
-        elif acao_usuario == 2:
-            retorno = estrutura_professor(professores_dic, disciplinas_dic)
-            if retorno == None:
-                pass
-            else:
-                professores_dic = retorno
-
-        elif acao_usuario == 3:
-            retorno = estrutura_aluno(alunos_dic, disciplinas_dic)
-            if retorno == None:
-                pass
-            else:
-                alunos_dic = retorno
-            
-        elif acao_usuario == 0:
-            print("Até breve...")
-            break
-
-"""
-FORMATAÇÃO DOS ARQUIVOS
----Alunos---
-matricula:nome:codigoDisciplina,notas:\n
----Professores---
-matricula:nome:codigoDisciplinas:\n
-212:Gilbran Andrade:#001:#002:\n
----Disciplinas---
-codigoDisciplina:nome:cargaHoraria:\n
-#001:PEOO:160:\n
-
-FORMATAÇÃO DOS DICIONÁRIOs
----Alunos---
-{matricula: ['Nome', ["#001,100,20,40,80", "#002, 0, 50, 60, 100"]]}
-
----Professores---
-{'212': ['Gilbran Andrade', ['#001', '#002']]}
-
----Disciplinas---
-{'#001': ['PEOO', '120']}
-"""
+    if (acao_usuario == 0):
+        print(cores.verde + "\nAté breve!")
+        print("=)" + cores.fim)
+        break
+    elif (acao_usuario == ""):
+        continue
+    elif (acao_usuario == 1):
+        retorno = False
+        while (not retorno):
+            retorno = menu_disciplina()
