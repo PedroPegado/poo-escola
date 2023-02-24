@@ -64,3 +64,27 @@ def menu_aluno():
             return False
         elif (acao_usuario == 3):
             aluno.emitirBoletim()
+        elif (acao_usuario == 1):
+            codigo_disciplina = input("> #")
+            if (len(codigo_disciplina) != 3):
+                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                print(cores.vermelho + "O código da disciplina deve ter 3 digitos" + cores.fim)
+                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                continue
+
+            with open("codigos_disciplinas.txt", "r") as arquivo:
+                linhas = arquivo.readlines()
+
+            if (f"#{codigo_disciplina}:\n" not in linhas):
+                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                print(cores.vermelho + "Essa disciplina não existe" + cores.fim)
+                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                continue
+
+            retorno = aluno.adicionarDisciplina(codigo_disciplina)
+            if (not retorno):
+                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                print(cores.vermelho + "Essa disciplina já foi cadastrada para esse(a) aluno(a)" + cores.fim)
+                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                continue
+

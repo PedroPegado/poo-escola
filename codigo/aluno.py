@@ -56,3 +56,27 @@ class Aluno:
 
             print(f"{nome_disciplina}, {n1:.1f}, {n2:.1f}, {n3:.1f}, {n4:.1f}, {media_final:.1f}")
 
+    def adicionarDisciplina(self, codigoDisciplina):
+
+        if (f"#{codigoDisciplina}" in self.disciplinas):
+            return False
+
+        with open("alunos.txt", "r+") as arquivo:
+            linhas = arquivo.readlines()
+            dados = f"{self.matricula}:{self.nome}:"
+
+            if (self.disciplinas != []):
+                for index, disciplina in enumerate(self.disciplinas):
+                    n1, n2, n3, n4 = [int(x) for x in self.notas[index]]
+                    dados += f"{disciplina},{n1},{n2},{n3},{n4}:"
+
+            indice_aluno = linhas.index(dados+"\n")
+            dados += f"#{codigoDisciplina},0,0,0,0:\n"
+            linhas[indice_aluno] = dados
+            arquivo.seek(0)
+            arquivo.writelines(linhas)
+
+        self.disciplinas.append(f"#{codigoDisciplina}")
+        self.notas.append(["0","0","0","0"])
+
+
