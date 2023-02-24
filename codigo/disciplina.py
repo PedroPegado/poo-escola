@@ -6,7 +6,7 @@ class Disciplina:
             linhas = arquivo.readlines()
 
             if (f"{self.codigoDisciplina}:\n" not in linhas):
-                print("Essa disciplina não existe. Informe os seguintes dados para cadastra-la no sistema.\n")
+                print("\nEssa disciplina não existe. Informe os seguintes dados para cadastra-la no sistema.\n")
                 print("Nome da discilina:")
                 self.nome = input("> ")
                 print("Carga Horaria da disciplina:")
@@ -69,7 +69,7 @@ class Disciplina:
                     n1, n2, n3, n4 = [float(x) for x in notas_aluno]
                     media_final = ((n1 * 2) + (n2 * 2) + (n3 * 3) + (n4 * 3)) / 10
                     nome_aluno = dados_aluno[1]
-                    print(f"{nome_aluno}, {n1:.2f}, {n2:.2f}, {n3:.2f}, {n4:.2f}, {media_final:.2f}")
+                    print(f"{nome_aluno}, {n1:.1f}, {n2:.1f}, {n3:.1f}, {n4:.1f}, {media_final:.1f}")
                     break
 
         if (not disciplina_tem_alunos):

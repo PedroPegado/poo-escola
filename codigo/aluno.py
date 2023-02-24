@@ -78,5 +78,6 @@ class Aluno:
 
         self.disciplinas.append(f"#{codigoDisciplina}")
         self.notas.append(["0","0","0","0"])
+        return True
 
 
