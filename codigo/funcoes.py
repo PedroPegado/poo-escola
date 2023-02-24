@@ -64,7 +64,7 @@ def menu_aluno():
             return False
         elif (acao_usuario == 3):
             aluno.emitirBoletim()
-        elif (acao_usuario == 1):
+        elif (acao_usuario == 1 or acao_usuario == 2):
             codigo_disciplina = input("> #")
             if (len(codigo_disciplina) != 3):
                 print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
@@ -81,10 +81,18 @@ def menu_aluno():
                 print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
                 continue
 
-            retorno = aluno.adicionarDisciplina(codigo_disciplina)
-            if (not retorno):
-                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
-                print(cores.vermelho + "Essa disciplina já foi cadastrada para esse(a) aluno(a)" + cores.fim)
-                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
-                continue
+            if (acao_usuario == 1):
+                retorno = aluno.adicionarDisciplina(codigo_disciplina)
+                if (not retorno):
+                    print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                    print(cores.vermelho + "Essa disciplina já foi cadastrada para este(a) aluno(a)" + cores.fim)
+                    print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                    continue
+            elif (acao_usuario == 2):
+                retorno = aluno.removerDisciplina(codigo_disciplina)
+                if (not retorno):
+                    print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                    print(cores.vermelho + "Essa disciplina não existe neste(a) aluno(a)" + cores.fim)
+                    print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                    continue
 

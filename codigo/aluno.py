@@ -61,7 +61,7 @@ class Aluno:
         if (f"#{codigoDisciplina}" in self.disciplinas):
             return False
 
-        with open("alunos.txt", "r+") as arquivo:
+        with open("alunos.txt", "r") as arquivo:
             linhas = arquivo.readlines()
             dados = f"{self.matricula}:{self.nome}:"
 
@@ -70,14 +70,46 @@ class Aluno:
                     n1, n2, n3, n4 = [int(x) for x in self.notas[index]]
                     dados += f"{disciplina},{n1},{n2},{n3},{n4}:"
 
-            indice_aluno = linhas.index(dados+"\n")
-            dados += f"#{codigoDisciplina},0,0,0,0:\n"
-            linhas[indice_aluno] = dados
-            arquivo.seek(0)
+        indice_aluno = linhas.index(dados+"\n")
+        dados += f"#{codigoDisciplina},0,0,0,0:\n"
+        linhas[indice_aluno] = dados
+
+        with open("alunos.txt", "w") as arquivo:
             arquivo.writelines(linhas)
 
         self.disciplinas.append(f"#{codigoDisciplina}")
         self.notas.append(["0","0","0","0"])
+        return True
+
+    def removerDisciplina(self, codigoDisciplina):
+
+        if (f"#{codigoDisciplina}" not in self.disciplinas):
+            return False
+
+        with open("alunos.txt", "r") as arquivo:
+            linhas = arquivo.readlines()
+
+        dados1 = f"{self.matricula}:{self.nome}:"
+        dados2 = dados1
+
+        for indice, disciplina in enumerate(self.disciplinas):
+            n1, n2, n3, n4 = [int(x) for x in self.notas[indice]]
+            dados1 += f"{disciplina},{n1},{n2},{n3},{n4}:"
+            if (f"#{codigoDisciplina}" not in disciplina):
+                dados2 += f"{disciplina},{n1},{n2},{n3},{n4}:"
+
+        dados1 += "\n"
+        dados2 += "\n"
+
+        indice_aluno = linhas.index(dados1)
+        linhas[indice_aluno] = dados2
+
+        with open("alunos.txt", "w") as arquivo:
+            arquivo.writelines(linhas)
+
+        indice = self.disciplinas.index(f"#{codigoDisciplina}")
+        self.disciplinas.pop(indice)
+        self.notas.pop(indice)
         return True
 
 
