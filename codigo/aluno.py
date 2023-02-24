@@ -36,3 +36,23 @@ class Aluno:
                 self.disciplinas.append(dados[0])
                 self.notas.append(dados[1:])
 
+    def emitirBoletim(self):
+        with open("disciplinas.txt", "r") as arquivo:
+            linhas = arquivo.readlines()
+
+        print("\nNome do(a) aluno(a):")
+        print(self.nome)
+        print("Matricula do(a) aluno(a):")
+        print(self.matricula)
+        print("Disciplina(s):")
+        print("(Nome, N1, N2, N3, N4, MF)")
+        for index, disciplina in enumerate(self.disciplinas):
+            n1, n2, n3, n4 = [float(x) for x in self.notas[index]]
+            media_final = ((n1 * 2) + (n2 * 2) + (n3 * 3) + (n4 * 3)) / 10
+            for linha in linhas:
+                if (disciplina in linha):
+                    nome_disciplina = linha.split(":")[1]
+                    break
+
+            print(f"{nome_disciplina}, {n1:.1f}, {n2:.1f}, {n3:.1f}, {n4:.1f}, {media_final:.1f}")
+
