@@ -1,7 +1,7 @@
-from funcoes import validar_arquivo, validar_acao_usuario, menu_disciplina
+from funcoes import validar_arquivo, validar_acao_usuario, menu_disciplina, menu_aluno
 from cores import Cores
-from disciplina import Disciplina
-nomes_arquivos = ["disciplinas.txt", "codigos_disciplinas.txt", "professores.txt", "alunos.txt"]
+
+nomes_arquivos = ["disciplinas.txt", "codigos_disciplinas.txt", "professores.txt", "alunos.txt", "matriculas_alunos.txt"]
 cores = Cores()
 
 for nome in nomes_arquivos:
@@ -21,3 +21,7 @@ while True:
         retorno = False
         while (not retorno):
             retorno = menu_disciplina()
+    elif (acao_usuario == 2):
+        retorno = False
+        while (not retorno):
+            retorno = menu_aluno()

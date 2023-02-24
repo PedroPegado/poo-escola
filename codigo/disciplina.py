@@ -2,7 +2,6 @@ class Disciplina:
     def __init__(self, codigoDisciplina):
         self.codigoDisciplina = f"#{codigoDisciplina}"
         self.professores = []
-        
         with open("codigos_disciplinas.txt", "r+") as arquivo:
             linhas = arquivo.readlines()
 
@@ -13,7 +12,6 @@ class Disciplina:
                 print("Carga Horaria da disciplina:")
                 self.cargaHoraria = int(input("> "))
                 arquivo.write(f"{self.codigoDisciplina}:\n")
-                
                 with open("disciplinas.txt", "a") as arquivo:
                     arquivo.write(f"{self.codigoDisciplina}:{self.nome}:{self.cargaHoraria}:\n")
                 return None
@@ -67,7 +65,7 @@ class Disciplina:
                 if (self.codigoDisciplina == codigo_disciplina_aluno):
                     disciplina_tem_alunos = True
                     dados_disciplina_aluno = disciplina.split(",")
-                    notas_aluno = dados_disciplina_aluno[1:]                
+                    notas_aluno = dados_disciplina_aluno[1:]
                     n1, n2, n3, n4 = [float(x) for x in notas_aluno]
                     media_final = ((n1 * 2) + (n2 * 2) + (n3 * 3) + (n4 * 3)) / 10
                     nome_aluno = dados_aluno[1]

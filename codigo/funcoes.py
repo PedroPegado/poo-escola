@@ -1,11 +1,12 @@
 from cores import Cores
+from aluno import Aluno
 from disciplina import Disciplina
 cores = Cores()
 
 def validar_arquivo(nome):
     try:
         arquivo = open(nome, "r")
-    except: 
+    except:
         arquivo = open(nome, "x")
     finally:
         arquivo.close()
@@ -42,3 +43,24 @@ def menu_disciplina():
         elif (acao_usuario == 1):
             disciplina.emitirRelatorio()
 
+def menu_aluno():
+    print("\nInforme a matricula do(a) aluno(a)")
+    matricula = input("> ")
+
+    if (len(matricula) != 14):
+        print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+        print(cores.vermelho + "A matricula deve ter 14 digitos" + cores.fim)
+        print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+        return False
+    aluno = Aluno(matricula)
+
+    while True:
+        print("\n(1)Adicionar Disciplina\n(2)Remover Disciplina\n(3)Emitir Boletim\n(4)Trocar de aluno\n(0)Sair")
+
+        acao_usuario = validar_acao_usuario("> ")
+        if (acao_usuario == 0):
+            return True
+        elif (acao_usuario == 4):
+            return False
+        elif (acao_usuario == 3):
+            aluno.emitirBoletim()
