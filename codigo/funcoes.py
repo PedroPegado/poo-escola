@@ -22,14 +22,34 @@ def validar_acao_usuario(mensagem):
     else:
         return acao_usuario
 
-def menu_disciplina():
-    print("\nInforme o codigo de disciplina")
-    codigo_disciplina = input("> #")
-
+def validar_codigo_disciplina(codigo_disciplina):
     if (len(codigo_disciplina) != 3):
         print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
         print(cores.vermelho + "O código da disciplina deve ter 3 digitos" + cores.fim)
         print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+        return False
+
+    return True
+
+def validar_disciplina_existe(codigo_disciplina)
+    with open("codigos_disciplinas.txt", "r") as arquivo:
+        linhas = arquivo.readlines()
+
+    if (f"#{codigo_disciplina}:\n" not in linhas):
+        print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+        print(cores.vermelho + "Essa disciplina não existe" + cores.fim)
+        print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+        return False
+
+    return True
+
+
+def menu_disciplina():
+    print("\nInforme o codigo de disciplina")
+    codigo_disciplina = input("> #")
+
+    retorno = validar_codigo_disciplina(codigo_disciplina)
+    if (not retorno):
         return False
     disciplina = Disciplina(codigo_disciplina)
 
