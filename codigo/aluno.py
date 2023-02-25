@@ -21,16 +21,14 @@ class Aluno:
         with open("alunos.txt", "r") as arquivo:
             linhas = arquivo.readlines()
 
-        possui_disciplinas = False
         for linha in linhas:
             dados = linha.split(":")
             if (self.matricula in dados):
                 self.nome = dados[1]
-                disciplinas = dados[2:len(dados) - 1]
-                possui_disciplinas = True
                 break
 
-        if (possui_disciplinas):
+        if (len(dados) > 3):
+            disciplinas = dados[2:len(dados) - 1]
             for disciplina in disciplinas:
                 dados = disciplina.split(",")
                 self.disciplinas.append(dados[0])

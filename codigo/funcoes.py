@@ -1,6 +1,7 @@
 from cores import Cores
 from aluno import Aluno
 from disciplina import Disciplina
+from professor import Professor
 cores = Cores()
 
 def validar_arquivo(nome):
@@ -133,4 +134,15 @@ def menu_aluno():
                     print(cores.vermelho + "Essa disciplina não existe neste(a) aluno(a)" + cores.fim)
                     print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
                     continue
+
+def menu_professor():
+    print("Informe a matricula do professor:")
+    matricula_professor = input("> ")
+    if (len(matricula_professor) != 6):
+        print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+        print(cores.vermelho + "A matricula deve ter 6 digitos" + cores.fim)
+        print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+        return False
+    professor = Professor(matricula_professor)
+    print("Foi")
 
