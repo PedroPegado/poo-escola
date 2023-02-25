@@ -22,7 +22,7 @@ def validar_acao_usuario(mensagem):
     else:
         return acao_usuario
 
-def validar_codigo_disciplina(codigo_disciplina):
+def validar_tamanho_codigo_disciplina(codigo_disciplina):
     if (len(codigo_disciplina) != 3):
         print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
         print(cores.vermelho + "O código da disciplina deve ter 3 digitos" + cores.fim)
@@ -31,7 +31,7 @@ def validar_codigo_disciplina(codigo_disciplina):
 
     return True
 
-def validar_disciplina_existe(codigo_disciplina)
+def validar_disciplina_existe(codigo_disciplina):
     with open("codigos_disciplinas.txt", "r") as arquivo:
         linhas = arquivo.readlines()
 
@@ -48,7 +48,7 @@ def menu_disciplina():
     print("\nInforme o codigo de disciplina")
     codigo_disciplina = input("> #")
 
-    retorno = validar_codigo_disciplina(codigo_disciplina)
+    retorno = validar_tamanho_codigo_disciplina(codigo_disciplina)
     if (not retorno):
         return False
     disciplina = Disciplina(codigo_disciplina)
@@ -75,30 +75,48 @@ def menu_aluno():
     aluno = Aluno(matricula)
 
     while True:
-        print("\n(1)Adicionar Disciplina\n(2)Remover Disciplina\n(3)Emitir Boletim\n(4)Trocar de aluno\n(0)Sair")
+        print("\n(1)Adicionar Disciplina\n(2)Remover Disciplina\n(3)Emitir Boletim\n(4)Alterar notas\n(5)Trocar de aluno\n(0)Sair")
 
         acao_usuario = validar_acao_usuario("> ")
         if (acao_usuario == 0):
             return True
-        elif (acao_usuario == 4):
+        elif (acao_usuario == 5):
             return False
+        elif (acao_usuario == 4):
+            codigo_disciplina = input("> #")
+
+            retorno_1 = validar_tamanho_codigo_disciplina(codigo_disciplina)
+            if (not retorno_1):
+                continue
+
+            retorno_2 = validar_disciplina_existe(codigo_disciplina)
+            if (not retorno_2):
+                continue
+
+            notas = []
+            for bimestre in range(1,5):
+                print(f"Informe a nota do {bimestre}º bimestre:")
+                nota = float(input("> "))
+                notas.append(nota)
+
+            retorno = aluno.alterarNotas(codigo_disciplina, notas)
+            if (not retorno):
+                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                print(cores.vermelho + "Essa disciplina não existe neste(a) aluno(a)" + cores.fim)
+                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+                continue
+
         elif (acao_usuario == 3):
             aluno.emitirBoletim()
         elif (acao_usuario == 1 or acao_usuario == 2):
             codigo_disciplina = input("> #")
-            if (len(codigo_disciplina) != 3):
-                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
-                print(cores.vermelho + "O código da disciplina deve ter 3 digitos" + cores.fim)
-                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+
+            retorno_1 = validar_tamanho_codigo_disciplina(codigo_disciplina)
+            if (not retorno_1):
                 continue
 
-            with open("codigos_disciplinas.txt", "r") as arquivo:
-                linhas = arquivo.readlines()
-
-            if (f"#{codigo_disciplina}:\n" not in linhas):
-                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
-                print(cores.vermelho + "Essa disciplina não existe" + cores.fim)
-                print(cores.pisca + "!!!!!!!!!!!!!!!!!!!!!!!!!!" + cores.fim)
+            retorno_2 = validar_disciplina_existe(codigo_disciplina)
+            if (not retorno_2):
                 continue
 
             if (acao_usuario == 1):

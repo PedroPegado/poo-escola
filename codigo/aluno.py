@@ -89,20 +89,20 @@ class Aluno:
         with open("alunos.txt", "r") as arquivo:
             linhas = arquivo.readlines()
 
-        dados1 = f"{self.matricula}:{self.nome}:"
-        dados2 = dados1
+        dados_1 = f"{self.matricula}:{self.nome}:"
+        dados_2 = dados_1
 
         for indice, disciplina in enumerate(self.disciplinas):
             n1, n2, n3, n4 = [int(x) for x in self.notas[indice]]
-            dados1 += f"{disciplina},{n1},{n2},{n3},{n4}:"
+            dados_1 += f"{disciplina},{n1},{n2},{n3},{n4}:"
             if (f"#{codigoDisciplina}" not in disciplina):
-                dados2 += f"{disciplina},{n1},{n2},{n3},{n4}:"
+                dados_2 += f"{disciplina},{n1},{n2},{n3},{n4}:"
 
-        dados1 += "\n"
-        dados2 += "\n"
+        dados_1 += "\n"
+        dados_2 += "\n"
 
-        indice_aluno = linhas.index(dados1)
-        linhas[indice_aluno] = dados2
+        indice_aluno = linhas.index(dados_1)
+        linhas[indice_aluno] = dados_2
 
         with open("alunos.txt", "w") as arquivo:
             arquivo.writelines(linhas)
@@ -112,4 +112,37 @@ class Aluno:
         self.notas.pop(indice)
         return True
 
+    def alterarNotas(self, codigoDisciplina, notas):
+
+        if (f"#{codigoDisciplina}" not in self.disciplinas):
+            return False
+
+        with open("alunos.txt", "r") as arquivo:
+            linhas = arquivo.readlines()
+
+        nota_1, nota_2, nota_3, nota_4 = notas
+
+        dados_1 = f"{self.matricula}:{self.nome}:"
+        dados_2 = dados_1
+
+        for indice, disciplina in enumerate(self.disciplinas):
+            n1, n2, n3, n4 = [int(x) for x in self.notas[indice]]
+            dados_1 += f"{disciplina},{n1},{n2},{n3},{n4}:"
+            if (f"#{codigoDisciplina}" in disciplina):
+                dados_2 += f"{disciplina},{nota_1},{nota_2},{nota_3},{nota_4}:"
+            else:
+                dados_2 += f"{disciplina},{n1},{n2},{n3},{n4}:"
+
+        dados_1 += "\n"
+        dados_2 += "\n"
+
+        indice_aluno = linhas.index(dados_1)
+        linhas[indice_aluno] = dados_2
+
+        with open("alunos.txt", "w") as arquivo:
+            arquivo.writelines(linhas)
+
+        indice = self.disciplinas.index(f"#{codigoDisciplina}")
+        self.notas[indice] = [str(x) for x in notas]
+        return True
 
